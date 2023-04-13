@@ -21,14 +21,14 @@ const Features = () => {
         />
         <Card
           title="Advanced Player Analytics"
-          des="Unlock deeper insights into player performance with our advanced analytics, allowing you
-           to make data-driven decisions and improve overall team success."
+          des="Optimize team success with advanced analytics for data-driven decisions on 
+          player performance."
           icon={<AiFillAppstore />}
         />
         <Card
-          title="Stat Forecasting"
-          des="Predict your player's performance in upcoming games with our
-          powerful Stat Forecasting feature."
+          title="Interactive Calendar"
+          des="Effortlessly manage your schedule with our interactive calendar that lets you schedule
+           games, practices, and more."
           icon={<SiProgress />}
         />
         <Card
