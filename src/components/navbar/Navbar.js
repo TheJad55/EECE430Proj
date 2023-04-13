@@ -39,7 +39,7 @@ const Navbar = () => {
             Contact Us
             </Link>
           </li >
-          <li className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+          <li className="mr-[40px] text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
             <a href='/login'>Login</a>
           </li>
         </ul>

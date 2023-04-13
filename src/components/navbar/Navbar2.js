@@ -19,7 +19,7 @@ const Navbar = () => {
       </div>
       <div>
         <ul className="hidden mdl:inline-flex items-center gap-6 lg:gap-10">
-          <li className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+          <li className="mr-[40px] text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
             <a href='/login'>Login</a>
           </li>
         </ul>
