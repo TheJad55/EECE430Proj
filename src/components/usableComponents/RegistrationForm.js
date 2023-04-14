@@ -13,9 +13,6 @@ const schema = z.object({
   lastName: z
     .string()
     .min(2, { message: "Last name must be at least 2 characters long." }),
-  age: z
-    .number({ invalid_type_error: "Age field is required." })
-    .min(18, { message: "You must be at least 18 years old" }),
   email: z.string().email("Email is invalid."),
   dob: z.string().refine((dateString) => {
     const date = new Date(dateString);
@@ -55,7 +52,6 @@ const RegistrationForm = () => {
   });
 
   const onSubmit1 = (data, e) => {
-    e.preventDefault();
     console.log(data);
     setShowSuccessAlert(true);
   };
@@ -70,21 +66,6 @@ const RegistrationForm = () => {
       style={{ backgroundImage: "linear-gradient(115deg, #2C2C2C, #FFA500)" }}
     >
       <div className="container mx-auto scale-125">
-        {showSuccessAlert && (
-          <div
-            className="alert alert-success alert-dismissible fade show mt-3"
-            role="alert"
-          >
-            Form submitted successfully!
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="alert"
-              aria-label="Close"
-              onClick={handleAlertDismiss}
-            ></button>
-          </div>
-        )}
         <div className="flex flex-col lg:flex-row w-10/12 lg:w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
           <div
             className="w-full lg:w-1/2 flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center"

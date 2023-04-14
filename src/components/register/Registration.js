@@ -2,7 +2,7 @@ import React from "react";
 import Navbar2 from "../navbar/Navbar2";
 import RegistrationForm from "../usableComponents/RegistrationForm";
 
-const Register = () => {
+const Registration = () => {
   return (
     <div>
       <Navbar2 />
@@ -11,4 +11,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Registration;
