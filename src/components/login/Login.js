@@ -6,7 +6,6 @@ const Login = () => {
   return (
     <div>
       <Navbar2 />
-      <h1>Login Page</h1>
       <LoginForm />
       
     </div>
