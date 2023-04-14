@@ -54,7 +54,8 @@ const RegistrationForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit1 = (data, e) => {
+    e.preventDefault();
     console.log(data);
     setShowSuccessAlert(true);
   };
@@ -105,7 +106,7 @@ const RegistrationForm = () => {
             <p className="mb-4 text-black">
               Create your account. It's free and only takes a minute.
             </p>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit1)}>
               {/* First Name and Last Name */}
               <div className="mt-5 flex">
                 {/* First Name */}
@@ -114,7 +115,7 @@ const RegistrationForm = () => {
                     id="firstName"
                     type="text"
                     placeholder="First Name"
-                    className="border border-gray-400 py-1 px-2 w-full"
+                    className="border border-gray-400 py-1 px-2 w-full text-black"
                     {...register("firstName")}
                   />
                   {errors.firstName && (
@@ -128,7 +129,7 @@ const RegistrationForm = () => {
                     id="lastName"
                     type="text"
                     placeholder="Last Name"
-                    className="border border-gray-400 py-1 px-2 w-full"
+                    className="border border-gray-400 py-1 px-2 w-full text-black"
                     {...register("lastName")}
                   />
                   {errors.lastName && (
@@ -143,7 +144,7 @@ const RegistrationForm = () => {
                   id="email"
                   type="email"
                   placeholder="Email"
-                  className="border border-gray-400 py-1 px-2 w-full"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
                   {...register("email")}
                 />
                 {errors.email && (
@@ -157,7 +158,7 @@ const RegistrationForm = () => {
                   id="password"
                   type="password"
                   placeholder="Password"
-                  className="border border-gray-400 py-1 px-2 w-full"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
                   {...register("password")}
                 />
                 {errors.password && (
@@ -171,7 +172,7 @@ const RegistrationForm = () => {
                   id="confirmPassword"
                   type="password"
                   placeholder="Confirm Password"
-                  className="border border-gray-400 py-1 px-2 w-full"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
                   {...register("confirmPassword")}
                 />
                 {errors.confirmPassword && (
@@ -187,7 +188,7 @@ const RegistrationForm = () => {
                   id="dob"
                   type="date"
                   placeholder="Date of Birth"
-                  className="border border-gray-400 py-1 px-2 w-full"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
                   {...register("dob")}
                 />
                 {errors.dob && (
@@ -201,7 +202,7 @@ const RegistrationForm = () => {
                   id="address"
                   type="text"
                   placeholder="Address"
-                  className="border border-gray-400 py-1 px-2 w-full"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
                   {...register("address")}
                 />
                 {errors.address && (
@@ -213,7 +214,7 @@ const RegistrationForm = () => {
               <div className="mt-5">
                 <select
                   id="gender"
-                  className="border border-gray-400 py-1 px-2 w-full"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
                   {...register("gender")}
                 >
                   <option value="">Select Gender</option>
@@ -237,6 +238,15 @@ const RegistrationForm = () => {
                   Register Now
                 </button>
               </div>
+              {showSuccessAlert && (
+                <div
+                  className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4"
+                  role="alert"
+                >
+                  <p className="font-bold">Success!</p>
+                  <p>Registration successful.</p>
+                </div>
+              )}
             </form>
           </div>
         </div>
