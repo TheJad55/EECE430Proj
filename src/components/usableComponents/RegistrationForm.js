@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import socialImage from "../../assets/images/LoginReg/social.jpg";
 
-const genderOptions = ["", "Male", "Female", "Other"];
+const genderOptions = ["Male", "Female", "Other"];
 
 const schema = z.object({
   firstName: z
@@ -31,6 +31,17 @@ const schema = z.object({
     .refine((value) => genderOptions.includes(value), {
       message: "Invalid gender option.",
     }),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters long." }),
+  confirmPassword: z.string().min(8, {
+    message: "Confirm password must be at least 8 characters long.",
+  }),
+});
+
+schema.refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords do not match.",
+  path: ["confirmPassword"],
 });
 
 const RegistrationForm = () => {
@@ -89,9 +100,9 @@ const RegistrationForm = () => {
               </p>
             </div>
           </div>
-          <div className="w-full lg:w-1/2 py-16 px-12 text-black">
-            <h2 className="text-3xl mb-4">Register</h2>
-            <p className="mb-4">
+          <div className="w-full lg:w-1/2 py-16 px-12">
+            <h2 className="text-3xl mb-4 text-black">Register</h2>
+            <p className="mb-4 text-black">
               Create your account. It's free and only takes a minute.
             </p>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -126,20 +137,6 @@ const RegistrationForm = () => {
                 </div>
               </div>
 
-              {/* Age */}
-              <div className="mt-5">
-                <input
-                  id="age"
-                  type="number"
-                  placeholder="Age"
-                  className="border border-gray-400 py-1 px-2 w-full"
-                  {...register("age", { valueAsNumber: true })}
-                />
-                {errors.age && (
-                  <p className="text-red-500">{errors.age.message}</p>
-                )}
-              </div>
-
               {/* Email */}
               <div className="mt-5">
                 <input
@@ -151,6 +148,36 @@ const RegistrationForm = () => {
                 />
                 {errors.email && (
                   <p className="text-red-500">{errors.email.message}</p>
+                )}
+              </div>
+
+              {/* Password */}
+              <div className="mt-5">
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="Password"
+                  className="border border-gray-400 py-1 px-2 w-full"
+                  {...register("password")}
+                />
+                {errors.password && (
+                  <p className="text-red-500">{errors.password.message}</p>
+                )}
+              </div>
+
+              {/* Confirm Password */}
+              <div className="mt-5">
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Confirm Password"
+                  className="border border-gray-400 py-1 px-2 w-full"
+                  {...register("confirmPassword")}
+                />
+                {errors.confirmPassword && (
+                  <p className="text-red-500">
+                    {errors.confirmPassword.message}
+                  </p>
                 )}
               </div>
 
@@ -189,6 +216,7 @@ const RegistrationForm = () => {
                   className="border border-gray-400 py-1 px-2 w-full"
                   {...register("gender")}
                 >
+                  <option value="">Select Gender</option>
                   {genderOptions.map((option) => (
                     <option key={option} value={option} className="text-black">
                       {option}
