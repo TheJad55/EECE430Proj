@@ -13,7 +13,7 @@ const PlayerProfile = () => {
   };
 
   return (
-    <div className="bg-gray-800 shadow-shadowOne rounded-lg p-8 shadow-md w-11/12 md:w-4/5 mx-auto scale-150 my-10">
+    <div className="bg-gray-800 shadow-shadowOne rounded-lg p-8 shadow-md w-11/12 md:w-4/5 mx-auto height:10vh my-10">
       <div className="flex scale-100">
         <div className="w-1/3">
           <img
