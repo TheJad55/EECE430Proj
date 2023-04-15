@@ -17,15 +17,20 @@ Chart.register(
   PointElement
 );
 
-const ChartComponent = ({ games, selectedColumn, selectedGame }) => {
-  const allSeason = selectedGame === "all";
-  const chartTitle = allSeason
+const ChartComponent = ({
+  games,
+  selectedColumn,
+  selectedGame,
+  displayBarChart,
+}) => {
+  const allSeasonSelected = selectedGame === "all";
+  const chartTitle = allSeasonSelected
     ? "All Season Averages"
     : `Game by Game ${
         selectedColumn.charAt(0).toUpperCase() + selectedColumn.slice(1)
       }`;
 
-  const data = {
+  const lineChartData = {
     labels: games.map((_, index) => `Game ${index + 1}`),
     datasets: [
       {
@@ -40,18 +45,17 @@ const ChartComponent = ({ games, selectedColumn, selectedGame }) => {
     ],
   };
 
-  const allSeasonData = {
+  const barChartData = {
     labels: Object.keys(games[0]).map(
       (key) => key.charAt(0).toUpperCase() + key.slice(1)
     ),
     datasets: [
       {
-        data: Object.keys(games[0]).map((key) => {
-          const total = games.reduce((acc, game) => acc + game[key], 0);
-          const average = total / games.length;
-          return average;
-        }),
-        backgroundColor: "#334155",
+        data: Object.keys(games[0]).map(
+          (key) =>
+            games.reduce((acc, game) => acc + game[key], 0) / games.length
+        ),
+        backgroundColor: "#ffa706",
         borderColor: "#ffa500",
       },
     ],
@@ -111,7 +115,7 @@ const ChartComponent = ({ games, selectedColumn, selectedGame }) => {
     },
   };
 
-  const ChartToRender = allSeason ? Bar : Line;
+  const ChartToRender = allSeasonSelected ? Bar : Line;
 
   return (
     <div
@@ -137,10 +141,11 @@ const ChartComponent = ({ games, selectedColumn, selectedGame }) => {
             bottom: 0,
           }}
         >
-          <ChartToRender
-            data={allSeason ? allSeasonData : data}
-            options={options}
-          ></ChartToRender>
+          {displayBarChart ? (
+            <Bar data={barChartData} options={options} />
+          ) : (
+            <Line data={lineChartData} options={options} />
+          )}
         </div>
       </div>
     </div>
