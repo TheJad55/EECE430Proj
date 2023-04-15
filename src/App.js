@@ -4,6 +4,7 @@ import FooterBottom from "./components/footer/FooterBottom";
 import Homep from "./components/home/Homep";
 import Login from "./components/login/Login";
 import Register from "./components/register/Registration";
+import Homesignedin from "./components/homesignedin/homesignedin";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Homep />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/homesignedin" element={<Homesignedin />} />
       </Routes>
       <Footer />
       <FooterBottom />

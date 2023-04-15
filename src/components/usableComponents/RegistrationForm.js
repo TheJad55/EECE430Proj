@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import socialImage from "../../assets/images/LoginReg/social.jpg";
 
-const genderOptions = ["", "Male", "Female", "Other"];
+const genderOptions = ["Male", "Female", "Other"];
 
 const schema = z.object({
   firstName: z
@@ -13,9 +13,6 @@ const schema = z.object({
   lastName: z
     .string()
     .min(2, { message: "Last name must be at least 2 characters long." }),
-  age: z
-    .number({ invalid_type_error: "Age field is required." })
-    .min(18, { message: "You must be at least 18 years old" }),
   email: z.string().email("Email is invalid."),
   dob: z.string().refine((dateString) => {
     const date = new Date(dateString);
@@ -31,6 +28,17 @@ const schema = z.object({
     .refine((value) => genderOptions.includes(value), {
       message: "Invalid gender option.",
     }),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters long." }),
+  confirmPassword: z.string().min(8, {
+    message: "Confirm password must be at least 8 characters long.",
+  }),
+});
+
+schema.refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords do not match.",
+  path: ["confirmPassword"],
 });
 
 const RegistrationForm = () => {
@@ -43,7 +51,7 @@ const RegistrationForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit1 = (data, e) => {
     console.log(data);
     setShowSuccessAlert(true);
   };
@@ -55,24 +63,9 @@ const RegistrationForm = () => {
   return (
     <div
       className="min-h-screen py-40"
-      style={{ backgroundImage: "linear-gradient(115deg, #2C2C2C, #FFA500)" }}
+      style={{ backgroundImage: "linear-gradient(115deg, #8B4000, #2C2C2C)" }}
     >
       <div className="container mx-auto scale-125">
-        {showSuccessAlert && (
-          <div
-            className="alert alert-success alert-dismissible fade show mt-3"
-            role="alert"
-          >
-            Form submitted successfully!
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="alert"
-              aria-label="Close"
-              onClick={handleAlertDismiss}
-            ></button>
-          </div>
-        )}
         <div className="flex flex-col lg:flex-row w-10/12 lg:w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
           <div
             className="w-full lg:w-1/2 flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center"
@@ -89,12 +82,12 @@ const RegistrationForm = () => {
               </p>
             </div>
           </div>
-          <div className="w-full lg:w-1/2 py-16 px-12 text-black">
-            <h2 className="text-3xl mb-4">Register</h2>
-            <p className="mb-4">
+          <div className="w-full lg:w-1/2 py-16 px-12">
+            <h2 className="text-3xl mb-4 text-black">Register</h2>
+            <p className="mb-4 text-black">
               Create your account. It's free and only takes a minute.
             </p>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit1)}>
               {/* First Name and Last Name */}
               <div className="mt-5 flex">
                 {/* First Name */}
@@ -103,7 +96,7 @@ const RegistrationForm = () => {
                     id="firstName"
                     type="text"
                     placeholder="First Name"
-                    className="border border-gray-400 py-1 px-2 w-full"
+                    className="border border-gray-400 py-1 px-2 w-full text-black"
                     {...register("firstName")}
                   />
                   {errors.firstName && (
@@ -117,7 +110,7 @@ const RegistrationForm = () => {
                     id="lastName"
                     type="text"
                     placeholder="Last Name"
-                    className="border border-gray-400 py-1 px-2 w-full"
+                    className="border border-gray-400 py-1 px-2 w-full text-black"
                     {...register("lastName")}
                   />
                   {errors.lastName && (
@@ -126,31 +119,47 @@ const RegistrationForm = () => {
                 </div>
               </div>
 
-              {/* Age */}
-              <div className="mt-5">
-                <input
-                  id="age"
-                  type="number"
-                  placeholder="Age"
-                  className="border border-gray-400 py-1 px-2 w-full"
-                  {...register("age", { valueAsNumber: true })}
-                />
-                {errors.age && (
-                  <p className="text-red-500">{errors.age.message}</p>
-                )}
-              </div>
-
               {/* Email */}
               <div className="mt-5">
                 <input
                   id="email"
                   type="email"
                   placeholder="Email"
-                  className="border border-gray-400 py-1 px-2 w-full"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
                   {...register("email")}
                 />
                 {errors.email && (
                   <p className="text-red-500">{errors.email.message}</p>
+                )}
+              </div>
+
+              {/* Password */}
+              <div className="mt-5">
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="Password"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
+                  {...register("password")}
+                />
+                {errors.password && (
+                  <p className="text-red-500">{errors.password.message}</p>
+                )}
+              </div>
+
+              {/* Confirm Password */}
+              <div className="mt-5">
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Confirm Password"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
+                  {...register("confirmPassword")}
+                />
+                {errors.confirmPassword && (
+                  <p className="text-red-500">
+                    {errors.confirmPassword.message}
+                  </p>
                 )}
               </div>
 
@@ -160,7 +169,7 @@ const RegistrationForm = () => {
                   id="dob"
                   type="date"
                   placeholder="Date of Birth"
-                  className="border border-gray-400 py-1 px-2 w-full"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
                   {...register("dob")}
                 />
                 {errors.dob && (
@@ -174,7 +183,7 @@ const RegistrationForm = () => {
                   id="address"
                   type="text"
                   placeholder="Address"
-                  className="border border-gray-400 py-1 px-2 w-full"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
                   {...register("address")}
                 />
                 {errors.address && (
@@ -186,9 +195,10 @@ const RegistrationForm = () => {
               <div className="mt-5">
                 <select
                   id="gender"
-                  className="border border-gray-400 py-1 px-2 w-full"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
                   {...register("gender")}
                 >
+                  <option value="">Select Gender</option>
                   {genderOptions.map((option) => (
                     <option key={option} value={option} className="text-black">
                       {option}
@@ -209,6 +219,15 @@ const RegistrationForm = () => {
                   Register Now
                 </button>
               </div>
+              {showSuccessAlert && (
+                <div
+                  className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4"
+                  role="alert"
+                >
+                  <p className="font-bold">Success!</p>
+                  <p>Registration successful.</p>
+                </div>
+              )}
             </form>
           </div>
         </div>
