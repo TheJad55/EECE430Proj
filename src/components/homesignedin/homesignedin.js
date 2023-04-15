@@ -2,6 +2,7 @@ import React from "react";
 import Navbar2 from "../navbar/Navbar2";
 import PlayerProfile from "../usableComponents/PlayerProfile";
 import ChartComponent from "../usableComponents/playerChart";
+import PlayerStatsTable from "../usableComponents/PlayerStats";
 
 const Homesignedin = () => {
   return (
@@ -15,7 +16,10 @@ const Homesignedin = () => {
           Your <span className="text-designColor capitalize">Stats</span>
         </h1>
         <div className="w-full py-20 border-b-[1px] border-b-black">
-          <ChartComponent />
+          <div className="m-8">
+            <PlayerStatsTable />
+            <div className="m-8"></div>
+          </div>
         </div>
       </div>
     </div>

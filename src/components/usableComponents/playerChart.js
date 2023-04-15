@@ -1,50 +1,62 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 import {
   Chart,
   LineElement,
+  BarElement,
   CategoryScale,
   LinearScale,
   PointElement,
 } from "chart.js";
 
-Chart.register(LineElement, CategoryScale, LinearScale, PointElement);
+Chart.register(
+  LineElement,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  PointElement
+);
 
-const ChartComponent = () => {
+const ChartComponent = ({ games, selectedColumn, selectedGame }) => {
+  const allSeason = selectedGame === "all";
+  const chartTitle = allSeason
+    ? "All Season Averages"
+    : `Game by Game ${
+        selectedColumn.charAt(0).toUpperCase() + selectedColumn.slice(1)
+      }`;
+
   const data = {
-    labels: [
-      "May 12",
-      "May 13",
-      "May 14",
-      "May 15",
-      "May 16",
-      "May 17",
-      "May 18",
-      "May 19",
-      "May 20",
-      "May 21",
-      "May 22",
-      "May 23",
-      "May 24",
-      "May 25",
-      "May 26",
-      "May 27",
-      "May 28",
-      "May 29",
-      "May 30",
-      "May 31",
-    ],
+    labels: games.map((_, index) => `Game ${index + 1}`),
     datasets: [
       {
-        data: [
-          12, 19, 3, 5, 2, 4, 12, 19, 8, 10, 6, 9, 12, 10, 3, 5, 2, 7, 3, 14,
-          12,
-        ],
+        data: games.map((game) => game[selectedColumn]),
+        backgroundColor: "#334155",
+        borderColor: "#ffa500",
+        pointBackgroundColor: games.map((_, index) =>
+          index === parseInt(selectedGame) ? "#ff0000" : "#334155"
+        ),
+        tension: 0.4,
+      },
+    ],
+  };
+
+  const allSeasonData = {
+    labels: Object.keys(games[0]).map(
+      (key) => key.charAt(0).toUpperCase() + key.slice(1)
+    ),
+    datasets: [
+      {
+        data: Object.keys(games[0]).map((key) => {
+          const total = games.reduce((acc, game) => acc + game[key], 0);
+          const average = total / games.length;
+          return average;
+        }),
         backgroundColor: "#334155",
         borderColor: "#ffa500",
       },
     ],
   };
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -67,6 +79,14 @@ const ChartComponent = () => {
       },
     },
     plugins: {
+      title: {
+        display: true,
+        text: chartTitle,
+        color: "#D3D3D3",
+        font: {
+          size: 24,
+        },
+      },
       tooltip: {
         enabled: true,
         mode: "nearest",
@@ -81,19 +101,24 @@ const ChartComponent = () => {
           title: () => {}, // Disable the title
           label: (context) => {
             const yValue = context.parsed.y;
-            return `y: ${yValue}`;
+            return "y: ${yValue}";
           },
         },
       },
+      point: {
+        hoverBackgroundColor: "#ff0000",
+      },
     },
   };
+
+  const ChartToRender = allSeason ? Bar : Line;
 
   return (
     <div
       className="grid place-items-center shadow-shadowOne"
       style={{
         width: "100%",
-        height: "80%",
+        height: "50%",
         position: "relative",
         border: "5px solid #333",
         borderRadius: "10px",
@@ -112,7 +137,10 @@ const ChartComponent = () => {
             bottom: 0,
           }}
         >
-          <Line data={data} options={options}></Line>
+          <ChartToRender
+            data={allSeason ? allSeasonData : data}
+            options={options}
+          ></ChartToRender>
         </div>
       </div>
     </div>
