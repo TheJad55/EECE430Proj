@@ -8,11 +8,15 @@ const Homesignedin = () => {
     <div>
       <Navbar2 />
       <div className="max-w-screen-xl mx-auto">
-        <PlayerProfile />
-        <h1 className="text-6xl font-bold text-white">
+        <div className="w-full py-20 border-b-[1px] border-b-black">
+          <PlayerProfile />
+        </div>
+        <h1 className="text-6xl font-bold text-white mt-8">
           Your <span className="text-designColor capitalize">Stats</span>
         </h1>
-        <ChartComponent />
+        <div className="w-full py-20 border-b-[1px] border-b-black">
+          <ChartComponent />
+        </div>
       </div>
     </div>
   );

@@ -12,12 +12,36 @@ Chart.register(LineElement, CategoryScale, LinearScale, PointElement);
 
 const ChartComponent = () => {
   const data = {
-    labels: ["May 12", "May 13", "May 14", "May 15", "May 16", "May 17"],
+    labels: [
+      "May 12",
+      "May 13",
+      "May 14",
+      "May 15",
+      "May 16",
+      "May 17",
+      "May 18",
+      "May 19",
+      "May 20",
+      "May 21",
+      "May 22",
+      "May 23",
+      "May 24",
+      "May 25",
+      "May 26",
+      "May 27",
+      "May 28",
+      "May 29",
+      "May 30",
+      "May 31",
+    ],
     datasets: [
       {
-        data: [12, 19, 3, 5, 2, 3],
+        data: [
+          12, 19, 3, 5, 2, 4, 12, 19, 8, 10, 6, 9, 12, 10, 3, 5, 2, 7, 3, 14,
+          12,
+        ],
         backgroundColor: "#334155",
-        borderColor: "rgba(255, 99, 132, 1)",
+        borderColor: "#ffa500",
       },
     ],
   };
@@ -29,8 +53,7 @@ const ChartComponent = () => {
         ticks: {
           color: "#D3D3D3",
           font: {
-            size: 25,
-            family: "Roboto",
+            size: 20,
           },
         },
       },
@@ -38,8 +61,27 @@ const ChartComponent = () => {
         ticks: {
           color: "#D3D3D3",
           font: {
-            size: 25,
-            family: "Roboto",
+            size: 20,
+          },
+        },
+      },
+    },
+    plugins: {
+      tooltip: {
+        enabled: true,
+        mode: "nearest",
+        intersect: false,
+        backgroundColor: "#fff",
+        borderColor: "#000",
+        borderWidth: 1,
+        titleColor: "#000",
+        bodyColor: "#000",
+        displayColors: false,
+        callbacks: {
+          title: () => {}, // Disable the title
+          label: (context) => {
+            const yValue = context.parsed.y;
+            return `y: ${yValue}`;
           },
         },
       },
@@ -48,20 +90,19 @@ const ChartComponent = () => {
 
   return (
     <div
-      className="bg-gray-700"
+      className="grid place-items-center shadow-shadowOne"
       style={{
         width: "100%",
         height: "80%",
-        marginLeft: "20px",
-        marginTop: "20px",
         position: "relative",
         border: "5px solid #333",
-        borderRadius: "50px",
+        borderRadius: "10px",
         padding: "20px",
-        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
       }}
     >
-      <div style={{ position: "relative", paddingBottom: "56.25%" }}>
+      <div
+        style={{ position: "relative", paddingBottom: "56.25%", width: "100%" }}
+      >
         <div
           style={{
             position: "absolute",
