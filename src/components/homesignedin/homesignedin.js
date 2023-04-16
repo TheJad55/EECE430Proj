@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar2 from "../navbar/Navbar2";
+import Navbar3 from "../navbar/Navbar3";
 import PlayerProfile from "../usableComponents/PlayerProfile";
 import PlayerStatsTable from "../usableComponents/PlayerStats";
 
 const Homesignedin = () => {
   return (
     <div>
-      <Navbar2 />
+      <Navbar3 />
       <div className="max-w-screen-xl mx-auto">
         <div className="w-full py-20 border-b-[1px] border-b-black">
           <PlayerProfile />

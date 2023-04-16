@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ChartComponent from "./PlayerChart";
+import ChartComponent from "./playerChart";
 
 const PlayerStatsTable = () => {
   const playerData = {
@@ -49,6 +49,7 @@ const PlayerStatsTable = () => {
     const gameNumber =
       selectedGame === "all" ? index + 1 : parseInt(selectedGame) + 1;
     return (
+      
       <tr key={index}>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-300">
           Game {gameNumber}
@@ -66,6 +67,10 @@ const PlayerStatsTable = () => {
   };
 
   return (
+    <section
+    id="stats"
+    className="w-full py-20 border-b-[1px] border-b-black"
+  >
     <div>
       <div className="mb-4">
         <label
@@ -150,6 +155,7 @@ const PlayerStatsTable = () => {
         />
       </div>
     </div>
+    </section>
   );
 };
 

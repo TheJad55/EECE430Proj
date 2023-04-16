@@ -1,7 +1,9 @@
 import React from "react";
 import jsImg from "../../assets/images/playerIMG/js.jpg";
 const PlayerProfile = () => {
+  
   const player = {
+
     imageUrl: jsImg,
     name: "LeBron James",
     age: 38,
@@ -13,6 +15,10 @@ const PlayerProfile = () => {
   };
 
   return (
+    <section
+    id="profile"
+    className="w-full py-20 border-b-[1px] border-b-black"
+  >
     <div className="content-center mx-auto">
       <h1 className="text-6xl font-bold text-white text-center mb-5">
         Welcome to your profile
@@ -53,6 +59,7 @@ const PlayerProfile = () => {
         </div>
       </div>
     </div>
+    </section>
   );
 };
 
