@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ChartComponent from "./playerChart";
+import ChartComponent from "./PlayerChart";
 
 const PlayerStatsTable = () => {
   const playerData = {
