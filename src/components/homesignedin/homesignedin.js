@@ -1,7 +1,6 @@
 import React from "react";
 import Navbar2 from "../navbar/Navbar2";
 import PlayerProfile from "../usableComponents/PlayerProfile";
-import ChartComponent from "../usableComponents/playerChart";
 import PlayerStatsTable from "../usableComponents/PlayerStats";
 
 const Homesignedin = () => {

@@ -13,15 +13,33 @@ const PlayerStatsTable = () => {
 
   const [selectedGame, setSelectedGame] = useState("all");
   const [selectedColumn, setSelectedColumn] = useState("points");
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [displayBarChart, setDisplayBarChart] = useState(false);
 
   const handleSelectChange = (e) => {
     setSelectedGame(e.target.value);
+    if (e.target.value !== "all") {
+      setSelectedRow(null);
+    }
   };
-
   const handleColumnClick = (column) => {
     setSelectedColumn(column);
   };
 
+  const handleRowClick = (index) => {
+    if (index === "all") {
+      setDisplayBarChart((prevDisplayBarChart) => !prevDisplayBarChart);
+      setSelectedRow((prevSelectedRow) =>
+        prevSelectedRow === "all" ? null : "all"
+      );
+    } else {
+      if (selectedRow === index) {
+        setSelectedRow(null);
+      } else {
+        setSelectedRow(index);
+      }
+    }
+  };
   const displayData =
     selectedGame === "all"
       ? playerData.games
@@ -82,7 +100,7 @@ const PlayerStatsTable = () => {
                 key={index}
                 onClick={() => handleColumnClick(key)}
                 className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider cursor-pointer ${
-                  selectedColumn === key ? "text-yellow-300" : "text-gray-500"
+                  selectedColumn === key ? "text-orange-400" : "text-gray-500"
                 }`}
               >
                 {key.charAt(0).toUpperCase() + key.slice(1)}
@@ -95,7 +113,12 @@ const PlayerStatsTable = () => {
             renderStatsRow(gameData, index)
           )}
           {selectedGame === "all" && (
-            <tr className="bg-gray-800">
+            <tr
+              className={`bg-gray-800 ${
+                selectedRow === "all" ? "bg-orange-400" : ""
+              }`}
+              onClick={() => handleRowClick("all")}
+            >
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-300">
                 All Season
               </td>
@@ -123,6 +146,7 @@ const PlayerStatsTable = () => {
           games={playerData.games}
           selectedGame={selectedGame}
           selectedColumn={selectedColumn}
+          displayBarChart={displayBarChart}
         />
       </div>
     </div>
