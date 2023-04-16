@@ -8,7 +8,7 @@ import Homesignedin from "./components/homesignedin/homesignedin";
 import { Routes, Route } from "react-router-dom";
 import Tournaments from "./components/tournaments/Tournaments";
 import CoachHomep from "./components/coachhomepage/CoachHomep";
-
+   
 function App() {
   return (
     <div className="w-full h-auto bg-bodyColor text-lightText ">
