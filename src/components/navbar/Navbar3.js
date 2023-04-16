@@ -16,8 +16,8 @@ const Navbar = () => {
           </a>
       </div>
       <div>
-        <ul className="hidden mdl:inline-flex items-center gap-6 lg:gap-10">
-          <li className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+        <ul className="mr-[40px] hidden mdl:inline-flex items-center gap-6 lg:gap-10">
+          <li className=" text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
             <Link
               to="profile"
               spy={true}
@@ -43,14 +43,14 @@ const Navbar = () => {
           </li>
           <li className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
             <Link
-              to="contact"
+              to="calendar"
               spy={true}
               smooth={true}
               offset={-70}
               duration={500}
               activeClass="active"
             >
-              Contact Us
+              Schedule
             </Link>
           </li>
         </ul>

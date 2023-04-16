@@ -2,6 +2,7 @@ import React from "react";
 import Navbar3 from "../navbar/Navbar3";
 import PlayerProfile from "../usableComponents/PlayerProfile";
 import PlayerStatsTable from "../usableComponents/PlayerStats";
+import Calendar3 from "../calendar/Calendar3.jsx"
 
 const Homesignedin = () => {
   return (
@@ -17,7 +18,9 @@ const Homesignedin = () => {
         <div className="w-full py-20 border-b-[1px] border-b-black">
           <div className="m-8">
             <PlayerStatsTable />
-            <div className="m-8"></div>
+            <div className="m-8">
+              <Calendar3 />
+            </div>
           </div>
         </div>
       </div>
