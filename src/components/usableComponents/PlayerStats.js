@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ChartComponent from "./playerChart";
+import ChartComponent from "./PlayerChart";
 
 const PlayerStatsTable = () => {
   const playerData = {
@@ -49,7 +49,6 @@ const PlayerStatsTable = () => {
     const gameNumber =
       selectedGame === "all" ? index + 1 : parseInt(selectedGame) + 1;
     return (
-      
       <tr key={index}>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-300">
           Game {gameNumber}
@@ -67,94 +66,91 @@ const PlayerStatsTable = () => {
   };
 
   return (
-    <section
-    id="stats"
-    className="w-full py-20 border-b-[1px] border-b-black"
-  >
-    <div>
-      <div className="mb-4">
-        <label
-          htmlFor="game-select"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Select Game
-        </label>
-        <select
-          id="game-select"
-          value={selectedGame}
-          onChange={handleSelectChange}
-          className="mt-1 block w-full pl-3 pr-10 py-2 text-base bg-gray-700 text-white border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-        >
-          <option value="all">All Games</option>
-          {playerData.games.map((_, index) => (
-            <option key={index} value={index}>
-              Game {index + 1}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-800">
-          <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Game
-            </th>
-            {Object.keys(playerData.games[0]).map((key, index) => (
-              <th
-                key={index}
-                onClick={() => handleColumnClick(key)}
-                className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider cursor-pointer ${
-                  selectedColumn === key ? "text-orange-400" : "text-gray-500"
-                }`}
-              >
-                {key.charAt(0).toUpperCase() + key.slice(1)}
-              </th>
+    <section id="stats" className="w-full py-20 border-b-[1px] border-b-black">
+      <div>
+        <div className="mb-4">
+          <label
+            htmlFor="game-select"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Select Game
+          </label>
+          <select
+            id="game-select"
+            value={selectedGame}
+            onChange={handleSelectChange}
+            className="mt-1 block w-full pl-3 pr-10 py-2 text-base bg-gray-700 text-white border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          >
+            <option value="all">All Games</option>
+            {playerData.games.map((_, index) => (
+              <option key={index} value={index}>
+                Game {index + 1}
+              </option>
             ))}
-          </tr>
-        </thead>
-        <tbody className="bg-gray-700 divide-y divide-gray-200">
-          {displayData.map((gameData, index) =>
-            renderStatsRow(gameData, index)
-          )}
-          {selectedGame === "all" && (
-            <tr
-              className={`bg-gray-800 ${
-                selectedRow === "all" ? "bg-orange-400" : ""
-              }`}
-              onClick={() => handleRowClick("all")}
-            >
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-300">
-                All Season
-              </td>
-              {Object.keys(playerData.games[0]).map((key, index) => {
-                const total = playerData.games.reduce(
-                  (acc, game) => acc + game[key],
-                  0
-                );
-                const average = total / playerData.games.length;
-                return (
-                  <td
-                    key={index}
-                    className="px-6 py-4 whitespace-nowrap text-sm text-white"
-                  >
-                    {average.toFixed(1)}
-                  </td>
-                );
-              })}
+          </select>
+        </div>
+
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-800">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Game
+              </th>
+              {Object.keys(playerData.games[0]).map((key, index) => (
+                <th
+                  key={index}
+                  onClick={() => handleColumnClick(key)}
+                  className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider cursor-pointer ${
+                    selectedColumn === key ? "text-orange-400" : "text-gray-500"
+                  }`}
+                >
+                  {key.charAt(0).toUpperCase() + key.slice(1)}
+                </th>
+              ))}
             </tr>
-          )}
-        </tbody>
-      </table>
-      <div className="mt-10">
-        <ChartComponent
-          games={playerData.games}
-          selectedGame={selectedGame}
-          selectedColumn={selectedColumn}
-          displayBarChart={displayBarChart}
-        />
+          </thead>
+          <tbody className="bg-gray-700 divide-y divide-gray-200">
+            {displayData.map((gameData, index) =>
+              renderStatsRow(gameData, index)
+            )}
+            {selectedGame === "all" && (
+              <tr
+                className={`bg-gray-800 ${
+                  selectedRow === "all" ? "bg-orange-400" : ""
+                }`}
+                onClick={() => handleRowClick("all")}
+              >
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-300">
+                  All Season
+                </td>
+                {Object.keys(playerData.games[0]).map((key, index) => {
+                  const total = playerData.games.reduce(
+                    (acc, game) => acc + game[key],
+                    0
+                  );
+                  const average = total / playerData.games.length;
+                  return (
+                    <td
+                      key={index}
+                      className="px-6 py-4 whitespace-nowrap text-sm text-white"
+                    >
+                      {average.toFixed(1)}
+                    </td>
+                  );
+                })}
+              </tr>
+            )}
+          </tbody>
+        </table>
+        <div className="mt-10">
+          <ChartComponent
+            games={playerData.games}
+            selectedGame={selectedGame}
+            selectedColumn={selectedColumn}
+            displayBarChart={displayBarChart}
+          />
+        </div>
       </div>
-    </div>
     </section>
   );
 };
