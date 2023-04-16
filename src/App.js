@@ -5,8 +5,8 @@ import Homep from "./components/home/Homep";
 import Login from "./components/login/Login";
 import Register from "./components/register/Registration";
 import Homesignedin from "./components/homesignedin/homesignedin";
-import Calendar2 from "./components/calendar/Calendar2";
 import { Routes, Route } from "react-router-dom";
+import Tournaments from "./components/tournaments/Tournaments";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/homesignedin" element={<Homesignedin />} />
-        <Route path="/calendar" element={<Calendar2 />} />
+        <Route path="/tournaments" element={<Tournaments />} />
       </Routes>
       <Footer />
       <FooterBottom />
