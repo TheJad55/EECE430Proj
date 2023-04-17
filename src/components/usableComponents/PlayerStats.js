@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ChartComponent from "./playerChart";
 import PlayerTable from "./PlayerTable";
 
-const PlayerStatsTable = () => {
+const PlayerStats = () => {
   const playerData = [
     {
       name: "LeBron James",
@@ -34,6 +34,11 @@ const PlayerStatsTable = () => {
         { points: 35, rebounds: 6, assists: 7, steals: 3, blocks: 0 },
         { points: 37, rebounds: 8, assists: 5, steals: 2, blocks: 2 },
         { points: 45, rebounds: 10, assists: 4, steals: 1, blocks: 0 },
+        { points: 32, rebounds: 5, assists: 6, steals: 2, blocks: 1 },
+        { points: 30, rebounds: 7, assists: 4, steals: 1, blocks: 0 },
+        { points: 35, rebounds: 9, assists: 5, steals: 3, blocks: 2 },
+        { points: 32, rebounds: 6, assists: 7, steals: 1, blocks: 0 },
+        { points: 30, rebounds: 8, assists: 4, steals: 2, blocks: 1 },
       ],
     },
     {
@@ -47,6 +52,37 @@ const PlayerStatsTable = () => {
       ],
     },
   ];
+
+  const totalGames = playerData.reduce(
+    (acc, player) => Math.max(acc, player.games.length),
+    0
+  );
+
+  const allTeamGames = Array.from({ length: totalGames }, (_, i) => {
+    const sumStats = playerData.reduce(
+      (acc, player) => {
+        if (player.games[i]) {
+          Object.keys(player.games[i]).forEach((stat) => {
+            acc[stat] += player.games[i][stat];
+          });
+        }
+        return acc;
+      },
+      { points: 0, rebounds: 0, assists: 0, steals: 0, blocks: 0 }
+    );
+
+    // Calculate the average for each stat
+    const avgStats = Object.keys(sumStats).reduce((acc, stat) => {
+      acc[stat] = sumStats[stat] / playerData.length;
+      return acc;
+    }, {});
+
+    return avgStats;
+  });
+  playerData.push({
+    name: "All Team",
+    games: allTeamGames,
+  });
 
   const [initialPlayer] = useState(0);
   const [selectedPlayers, setSelectedPlayers] = useState([]);
@@ -121,7 +157,16 @@ const PlayerStatsTable = () => {
   return (
     <section id="stats" className="w-full py-20 border-b-[1px] border-b-black">
       <div>
-        <div className="mb-4">
+        <PlayerTable
+          players={playerData}
+          selectedColumn={selectedColumn}
+          setSelectedPlayers={setSelectedPlayers}
+          initialPlayer={initialPlayer}
+          selectedPlayers={selectedPlayers}
+          handleColumnClick={handleColumnClick}
+        />
+
+        <div className="mb-4 mt-8">
           <label
             htmlFor="game-select"
             className="block text-sm font-medium text-gray-700"
@@ -143,23 +188,6 @@ const PlayerStatsTable = () => {
           </select>
         </div>
 
-        <PlayerTable
-          players={playerData}
-          selectedColumn={selectedColumn}
-          setSelectedPlayers={setSelectedPlayers}
-          initialPlayer={initialPlayer}
-          selectedPlayers={selectedPlayers}
-        />
-
-        <div className="mt-10">
-          <ChartComponent
-            games={playerData.map((player) => player.games)}
-            selectedGame={selectedGame}
-            selectedColumn={selectedColumn}
-            displayBarChart={displayBarChart}
-            selectedPlayers={selectedPlayers}
-          />
-        </div>
         <div className="mb-4">
           <label
             htmlFor="player-select"
@@ -182,9 +210,19 @@ const PlayerStatsTable = () => {
               ))}
           </select>
         </div>
+
+        <div className="mt-10">
+          <ChartComponent
+            games={playerData.map((player) => player.games)}
+            selectedGame={selectedGame}
+            selectedColumn={selectedColumn}
+            displayBarChart={displayBarChart}
+            selectedPlayers={selectedPlayers}
+          />
+        </div>
       </div>
     </section>
   );
 };
 
-export default PlayerStatsTable;
+export default PlayerStats;

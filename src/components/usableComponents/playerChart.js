@@ -87,6 +87,10 @@ const ChartComponent = ({
     ],
   };
 
+  const highestValue = Math.max(
+    ...lineChartData.datasets.flatMap((dataset) => Math.max(...dataset.data))
+  );
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -98,6 +102,9 @@ const ChartComponent = ({
             size: 20,
           },
         },
+        grid: {
+          color: "#5A5A5A",
+        },
       },
       y: {
         ticks: {
@@ -105,7 +112,12 @@ const ChartComponent = ({
           font: {
             size: 20,
           },
+          beginAtZero: true, // Start the axis at zero
         },
+        grid: {
+          color: "#5A5A5A", // Set the gridlines color to light grey
+        },
+        min: 0, // Make the y-axis start from zero
       },
     },
     plugins: {

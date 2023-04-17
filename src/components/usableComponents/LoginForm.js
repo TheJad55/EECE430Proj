@@ -31,7 +31,7 @@ const LoginForm = () => {
       className="min-h-screen py-40"
       style={{ backgroundImage: "linear-gradient(115deg, #2C2C2C, #FFA500)" }}
     >
-      <div className="container mx-auto scale-125">
+      <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row w-10/12 lg:w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
           <div
             className="w-full lg:w-1/2 flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center"
