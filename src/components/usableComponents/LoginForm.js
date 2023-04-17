@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import socialImage from "../../assets/images/LoginReg/social.jpg";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const schema = z.object({
   email: z.string().email("Email is invalid."),
@@ -12,6 +13,7 @@ const schema = z.object({
 });
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -22,6 +24,7 @@ const LoginForm = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+    navigate("/homesignedin")
   };
 
   return (
@@ -75,12 +78,14 @@ const LoginForm = () => {
                 )}
               </div>
               <div className="mt-5">
+                
                 <button
                   className="w-full bg-orange-500 py-3 text-center text-white transition-transform duration-300 hover:scale-105"
                   type="submit"
                 >
-                  Login
+                 Login 
                 </button>
+               
               </div>
             </form>
           </div>
