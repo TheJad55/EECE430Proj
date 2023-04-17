@@ -1,7 +1,9 @@
 import React from 'react'
-import { AiFillAppstore } from "react-icons/ai";
-import { FaMobile, FaGlobe } from "react-icons/fa";
-import { SiProgress, SiAntdesign } from "react-icons/si";
+import {ImProfile} from "react-icons/im";
+import {TbTournament} from "react-icons/tb";
+import {BsGraphUp, BsCalendar} from "react-icons/bs";
+import {GoGraph} from "react-icons/go";
+import {AiOutlineTeam} from "react-icons/ai"
 import Title from '../layouts/Title';
 import Card from './Card';
 
@@ -14,40 +16,40 @@ const Features = () => {
       <Title title="Features" des="What We Offer" />
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-20">
         <Card
-          title="Player Tracking"
+          title="Performance Tracking"
           des="Monitor your players' shots, passes, and other stats to gain valuable insights and 
           improve their game."
-         
+          icon={<ImProfile />}
         />
         <Card
-          title="Advanced Player Analytics"
+          title="Stat Projection"
+          des="Discover future performance insights with Stat Projection, a powerful tool that estimates points, assists,
+           and other key stats for your players."
+          icon={<BsGraphUp />}
+        />
+        <Card
+          title="Advanced Team Analytics"
           des="Optimize team success with advanced analytics for data-driven decisions on 
           player performance."
-          icon={<AiFillAppstore />}
+          icon={<GoGraph />}
         />
         <Card
           title="Interactive Calendar"
           des="Effortlessly manage your schedule with our interactive calendar that lets you schedule
            games, practices, and more."
-          icon={<SiProgress />}
+          icon={<BsCalendar />}
         />
         <Card
-          title="Mobile Development"
-          des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque soluta
-          hic consequuntur eum repellendus ad."
-          icon={<FaMobile />}
+          title="Comparison Software"
+          des="Compare and contrast the skills and performance of two players with our intuitive Comparison Software, 
+          designed to help you make informed decisions."
+          icon={<AiOutlineTeam />}
         />
         <Card
-          title="UX Design"
-          des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque soluta
-          hic consequuntur eum repellendus ad."
-          icon={<SiAntdesign />}
-        />
-        <Card
-          title="Hosting Websites"
-          des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque soluta
-          hic consequuntur eum repellendus ad."
-          icon={<FaGlobe />}
+          title="Tournament Browsing"
+          des="Explore, join, and create exciting tournaments with Tournament Browsing, a comprehensive platform designed to connect 
+          players and enhance competition."
+          icon={<TbTournament />}
         />
       </div>
     </section>
