@@ -22,6 +22,7 @@ const ChartComponent = ({
   selectedColumn,
   selectedGame,
   displayBarChart,
+  selectedPlayers,
 }) => {
   const allSeasonSelected = selectedGame === "all";
   const chartTitle = allSeasonSelected
@@ -31,17 +32,42 @@ const ChartComponent = ({
       }`;
 
   const lineChartData = {
-    labels: games.map((_, index) => `Game ${index + 1}`),
+    labels: games[0].map((_, index) => `Game ${index + 1}`),
     datasets: [
       {
-        data: games.map((game) => game[selectedColumn]),
+        // Initial player's dataset (LeBron James)
+        data: games[0].map((game) => game[selectedColumn]),
         backgroundColor: "#334155",
-        borderColor: "#ffa500",
-        pointBackgroundColor: games.map((_, index) =>
-          index === parseInt(selectedGame) ? "#ff0000" : "#334155"
+        borderColor: "#ff8c00",
+        pointBackgroundColor: games[0].map((_, index) =>
+          index === parseInt(selectedGame) ? "#ff0000" : "#ffffff"
         ),
-        tension: 0.4,
+        pointBorderColor: games[0].map((_, index) =>
+          index === parseInt(selectedGame) ? "#ff6600" : "#334155"
+        ),
+        pointRadius: games[0].map((_, index) =>
+          index === parseInt(selectedGame) ? 6 : 4
+        ),
+        tension: 0.3,
       },
+      ...selectedPlayers.map((playerIndex) => {
+        const playerGames = games[playerIndex];
+        return {
+          data: playerGames.map((game) => game[selectedColumn]),
+          backgroundColor: playerIndex === 0 ? "#334155" : "#7C3AED",
+          borderColor: playerIndex === 0 ? "#ff8c00" : "#A78BFA",
+          pointBackgroundColor: playerGames.map((_, index) =>
+            index === parseInt(selectedGame) ? "#ff0000" : "#ffffff"
+          ),
+          pointBorderColor: playerGames.map((_, index) =>
+            index === parseInt(selectedGame) ? "#ff6600" : "#334155"
+          ),
+          pointRadius: playerGames.map((_, index) =>
+            index === parseInt(selectedGame) ? 6 : 4
+          ),
+          tension: 0.3,
+        };
+      }),
     ],
   };
 
@@ -113,6 +139,7 @@ const ChartComponent = ({
         hoverBackgroundColor: "#ff0000",
       },
     },
+    spanGaps: true, // Add this line to enable continuous line chart
   };
 
   const ChartToRender = allSeasonSelected ? Bar : Line;

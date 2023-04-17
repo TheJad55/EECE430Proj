@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import socialImage from "../../assets/images/LoginReg/social.jpg";
-
+import { useNavigate } from "react-router-dom";
 const schema = z.object({
   email: z.string().email("Email is invalid."),
   password: z.string().min(8, {
@@ -12,6 +12,7 @@ const schema = z.object({
 });
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -21,6 +22,7 @@ const LoginForm = () => {
   });
 
   const onSubmit = (data) => {
+    navigate("/homesignedin");
     console.log(data);
   };
 
