@@ -1,8 +1,8 @@
 import React,{useState} from 'react'
 import Title from '../layouts/Title';
-import ContactLeft from './ContactLeft';
+import ContactCoachLeft from './ContactCoachLeft';
 
-const Contact = () => {
+const ContactCoach = () => {
   const [username, setUsername] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -18,21 +18,22 @@ const Contact = () => {
       .match(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/);
   };
   // ========== Email Validation end here ================
+  const isPositiveInteger = (value) => /^\d+$/.test(value);
 
   const handleSend = (e) => {
     e.preventDefault();
     if (username === "") {
-      setErrMsg("Username is required!");
-    } else if (phoneNumber === "") {
-      setErrMsg("Phone number is required!");
-    } else if (email === "") {
-      setErrMsg("Please give your Email!");
-    } else if (!emailValidation(email)) {
-      setErrMsg("Give a valid Email!");
-    } else if (subject === "") {
-      setErrMsg("Plese give your Subject!");
-    } else if (message === "") {
-      setErrMsg("Message is required!");
+      setErrMsg("Player name is required!");
+    } else if (username.trim().length < 2) {
+      setErrMsg("Player name must be at least 2 characters long!");
+    } else if (phoneNumber === "" || !isPositiveInteger(phoneNumber)) {
+      setErrMsg("Valid game number is required!");
+    } else if (email === "" || !isPositiveInteger(email)) {
+      setErrMsg("Valid points are required!");
+    } else if (subject === "" || !isPositiveInteger(subject)) {
+      setErrMsg("Valid rebounds are required!");
+    } else if (message === "" || !isPositiveInteger(message)) {
+      setErrMsg("Valid assists are required!");
     } else {
       setSuccessMsg(
         `Thank you dear ${username}, Your Messages has been sent Successfully!`
@@ -45,6 +46,7 @@ const Contact = () => {
       setMessage("");
     }
   };
+  
   return (
     <section
       id="contact"
@@ -55,7 +57,7 @@ const Contact = () => {
       </div>
       <div className="w-full">
         <div className="w-full h-auto flex flex-col lgl:flex-row justify-between">
-          <ContactLeft />
+          <ContactCoachLeft />
           <div className="w-full lgl:w-[60%] h-full py-10 bg-gradient-to-r from-[#1e2024] to-[#23272b] flex flex-col gap-8 p-4 lgl:p-8 rounded-lg shadow-shadowOne">
             <form className="w-full flex flex-col gap-4 lgl:gap-6 py-2 lgl:py-5">
               {errMsg && (
@@ -71,7 +73,7 @@ const Contact = () => {
               <div className="w-full flex flex-col lgl:flex-row gap-10">
                 <div className="w-full lgl:w-1/2 flex flex-col gap-4">
                   <p className="text-sm text-gray-400 uppercase tracking-wide">
-                    Your name
+                    Player Name
                   </p>
                   <input
                     onChange={(e) => setUsername(e.target.value)}
@@ -85,7 +87,7 @@ const Contact = () => {
                 </div>
                 <div className="w-full lgl:w-1/2 flex flex-col gap-4">
                   <p className="text-sm text-gray-400 uppercase tracking-wide">
-                    Phone Number
+                    Game Number
                   </p>
                   <input
                     onChange={(e) => setPhoneNumber(e.target.value)}
@@ -100,7 +102,7 @@ const Contact = () => {
               </div>
               <div className="flex flex-col gap-4">
                 <p className="text-sm text-gray-400 uppercase tracking-wide">
-                  Email
+                  Points
                 </p>
                 <input
                   onChange={(e) => setEmail(e.target.value)}
@@ -114,7 +116,7 @@ const Contact = () => {
               </div>
               <div className="flex flex-col gap-4">
                 <p className="text-sm text-gray-400 uppercase tracking-wide">
-                  Subject
+                  Rebounds
                 </p>
                 <input
                   onChange={(e) => setSubject(e.target.value)}
@@ -128,24 +130,38 @@ const Contact = () => {
               </div>
               <div className="flex flex-col gap-4">
                 <p className="text-sm text-gray-400 uppercase tracking-wide">
-                  Message
+                  Assists
                 </p>
-                <textarea
-                  onChange={(e) => setMessage(e.target.value)}
-                  value={message}
+                <input
+                  onChange={(e) => setSubject(e.target.value)}
+                  value={subject}
                   className={`${
-                    errMsg === "Message is required!" && "outline-designColor"
-                  } contactTextArea`}
-                  cols="30"
-                  rows="8"
-                ></textarea>
+                    errMsg === "Plese give your Subject!" &&
+                    "outline-designColor"
+                  } contactInput`}
+                  type="text"
+                />
+              </div>
+              <div className="flex flex-col gap-4">
+                <p className="text-sm text-gray-400 uppercase tracking-wide">
+                  Steals
+                </p>
+                <input
+                  onChange={(e) => setSubject(e.target.value)}
+                  value={subject}
+                  className={`${
+                    errMsg === "Plese give your Subject!" &&
+                    "outline-designColor"
+                  } contactInput`}
+                  type="text"
+                />
               </div>
               <div className="w-full">
                 <button
                   onClick={handleSend}
                   className="w-full h-12 bg-[#141518] rounded-lg text-base text-gray-400 tracking-wider uppercase hover:text-white duration-300 hover:border-[1px] hover:border-designColor border-transparent"
                 >
-                  Send Message
+                  Blocks
                 </button>
               </div>
               {errMsg && (
@@ -166,4 +182,4 @@ const Contact = () => {
   );
 }
 
-export default Contact
+export default ContactCoach;
