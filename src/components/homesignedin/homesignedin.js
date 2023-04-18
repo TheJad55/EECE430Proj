@@ -2,7 +2,7 @@ import React from "react";
 import Navbar3 from "../navbar/Navbar3";
 import PlayerProfile from "../usableComponents/PlayerProfile";
 import PlayerTeam from "../usableComponents/PlayerTeam";
-
+import TournamentTable from "../usableComponents/TournamentTable";
 import PlayerStats from "../usableComponents/PlayerStats";
 import Calendar3 from "../calendar/Calendar3.jsx";
 
@@ -21,6 +21,9 @@ const Homesignedin = () => {
           <PlayerStats />
           <div className="m-8">
             <Calendar3 />
+          </div>
+          <div className="m-8">
+            <TournamentTable />
           </div>
         </div>
       </div>
