@@ -3,6 +3,9 @@ import BasketballTeamTable from "../usableComponents/TeamTable";
 import Navbar2 from "../navbar/Navbar2";
 import CoachProfile from "../usableComponents/CoachProfile";
 import TeamStats from "../coachComponents/TeamStats";
+import TournamentTable from "../usableComponents/TournamentTable";
+import TournamentOptions from "../usableComponents/TournamentOptions";
+import ContactCoach from "../contact/ContactCoach";
 const coach = {
   imageUrl: "path/to/js.jpg",
   name: "John Smith",
@@ -13,6 +16,15 @@ const coach = {
   education: "Bachelor's degree in Sports Management",
   championships: 2,
   teamColor: "#2F5233",
+};
+const styles = {
+  container: {
+
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "flex-start",
+    marginTop: "5%",
+  },
 };
 
 const CoachHomep = () => {
@@ -39,6 +51,17 @@ const CoachHomep = () => {
           <div className="w-full py-20 border-b-[1px] border-b-black">
             <TeamStats />
           </div>
+          <h1 className="text-6xl font-bold text-white mt-8">
+          <span className="text-designColor capitalize">Tournaments</span>
+        </h1>
+          <div style={styles.container}>
+        <TournamentTable />
+        <TournamentOptions />
+      </div>
+      <h1 className="text-6xl font-bold text-white mt-20">
+          Modify <span className="text-designColor capitalize">Players</span>
+        </h1>
+      <ContactCoach />
         </div>
       </div>
     </div>
