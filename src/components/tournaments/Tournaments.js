@@ -1,30 +1,29 @@
-import React from 'react';
-import TournamentTable from '../usableComponents/TournamentTable'
-import Navbar from '../navbar/Navbar';
-import TournamentOptions from '../usableComponents/TournamentOptions';
+import React from "react";
+import TournamentTable from "../usableComponents/TournamentTable";
+import Navbar from "../navbar/Navbar";
+import TournamentOptions from "../usableComponents/TournamentOptions";
 
 const styles = {
-    container: {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-around",
-      alignItems: "flex-start",
-      marginTop: "5%",
-    },
-  };
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "flex-start",
+    marginTop: "5%",
+  },
+};
+
 const Tournaments = () => {
-    return (
+  return (
+    <div className="w-full h-auto bg-bodyColor text-lightText ">
+      <Navbar />
 
-      <div className="w-full h-auto bg-bodyColor text-lightText ">
-        <Navbar />
-
-        <div style={styles.container}>
+      <div style={styles.container}>
         <TournamentTable />
-      <TournamentOptions />
-    
-    </div>
+        <TournamentOptions />
       </div>
-    );
-  }
-  
-  export default Tournaments;
+    </div>
+  );
+};
+
+export default Tournaments;

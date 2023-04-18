@@ -12,7 +12,7 @@ const PlayerTable = ({
   ];
 
   const columnHeaderClasses = (column) =>
-    `px-3 sm:px-6 py-2 sm:py-3 text-left text-xs sm:text-sm font-medium ${
+    `py-2 sm:py-3 text-left font-medium ${
       column === selectedColumn ? "bg-indigo-500" : "bg-gray-700"
     } text-gray-300 uppercase tracking-wider cursor-pointer`;
 
@@ -23,11 +23,11 @@ const PlayerTable = ({
           <h2 className="text-lg font-bold text-gray-300 mb-4">
             {player.name}
           </h2>
-          <div className="w-full">
-            <table className="w-full divide-y divide-gray-200">
+          <div className="overflow-x-auto">
+            <table className="w-full divide-y divide-gray-200 text-sm">
               <thead className="bg-gray-700">
                 <tr>
-                  <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs sm:text-sm font-medium text-gray-300 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-2 sm:py-3 text-left font-medium text-gray-300 uppercase tracking-wider">
                     Game
                   </th>
                   {Object.keys(player.games[0]).map((column, index) => (
@@ -47,13 +47,13 @@ const PlayerTable = ({
               <tbody className="divide-y divide-gray-200">
                 {player.games.map((game, gameIndex) => (
                   <tr key={gameIndex}>
-                    <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-gray-100">
+                    <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-gray-100">
                       {gameIndex + 1}
                     </td>
                     {Object.values(game).map((value, index) => (
                       <td
                         key={index}
-                        className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-gray-100"
+                        className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-gray-100"
                       >
                         {value}
                       </td>

@@ -2,7 +2,7 @@ import React from "react";
 import BasketballTeamTable from "../usableComponents/TeamTable";
 import Navbar2 from "../navbar/Navbar2";
 import CoachProfile from "../usableComponents/CoachProfile";
-import teamData from "../data/teamdata";
+import TeamStats from "../coachComponents/TeamStats";
 const coach = {
   imageUrl: "path/to/js.jpg",
   name: "John Smith",
@@ -34,8 +34,10 @@ const CoachHomep = () => {
         </h1>
         <div className="w-full py-20 border-b-[1px] border-b-black">
           <div className="m-8">
-            <BasketballTeamTable teamData={teamData}> </BasketballTeamTable>
             <div className="m-8"></div>
+          </div>
+          <div className="w-full py-20 border-b-[1px] border-b-black">
+            <TeamStats />
           </div>
         </div>
       </div>
