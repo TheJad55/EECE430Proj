@@ -24,7 +24,7 @@ const PlayerTeam = () => {
 
   return (
     <section
-      id="profile"
+      id="team"
       className="w-full py-20 border-b-[1px] border-b-black"
     >
       <div className="content-center mx-auto">

@@ -6,6 +6,7 @@ import TeamStats from "../coachComponents/TeamStats";
 import TournamentTable from "../usableComponents/TournamentTable";
 import TournamentOptions from "../usableComponents/TournamentOptions";
 import ContactCoach from "../contact/ContactCoach";
+import Calendar from "../calendar/Calendar.jsx";
 const coach = {
   imageUrl: "path/to/js.jpg",
   name: "John Smith",
@@ -59,9 +60,10 @@ const CoachHomep = () => {
         <TournamentOptions />
       </div>
       <h1 className="text-6xl font-bold text-white mt-20">
-          Modify <span className="text-designColor capitalize">Players</span>
+          Add Player <span className="text-designColor capitalize">Stats</span>
         </h1>
       <ContactCoach />
+      <Calendar />
         </div>
       </div>
     </div>

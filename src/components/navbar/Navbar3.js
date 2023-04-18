@@ -29,6 +29,18 @@ const Navbar = () => {
               Profile
             </Link>
           </li>
+          <li className=" text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+            <Link
+              to="team"
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
+              activeClass="active"
+            >
+              Team
+            </Link>
+          </li>
           <li className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
             <Link
               to="stats"
