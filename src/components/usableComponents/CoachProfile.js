@@ -16,6 +16,10 @@ const CoachProfile = () => {
   };
 
   return (
+    <section
+    id="profile2"
+    className="w-full py-20 border-b-[1px] border-b-black"
+  >
     <div className="content-center mx-auto flex justify-center">
       <div className="w-2/3">
         <div className="w-full">
@@ -59,6 +63,7 @@ const CoachProfile = () => {
         <img className="h-96" src={teamLogo} alt={coach.team} />
       </div>
     </div>
+    </section>
   );
 };
 

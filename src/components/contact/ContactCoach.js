@@ -47,7 +47,7 @@ const ContactCoach = () => {
   };
   return (
     <section
-      id="Player"
+      id="add"
       className="w-full py-20 border-b-[1px] border-b-black"
     >
       <div className="w-full">

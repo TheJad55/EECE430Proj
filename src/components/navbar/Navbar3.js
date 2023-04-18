@@ -62,7 +62,7 @@ const Navbar = () => {
               duration={500}
               activeClass="active"
             >
-              Schedule
+              Calendar
             </Link>
           </li>
         </ul>
@@ -84,24 +84,54 @@ const Navbar = () => {
                 </p>
               </div>
               <ul className="flex flex-col gap-4">
-                {navLinksdata.map((item) => (
-                  <li
-                    key={item._id}
-                    className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300"
-                  >
-                    <Link
-                      onClick={() => setShowMenu(false)}
-                      activeClass="active"
-                      to={item.link}
-                      spy={true}
-                      smooth={true}
-                      offset={-70}
-                      duration={500}
-                    >
-                      {item.title}
-                    </Link>
-                  </li>
-                ))}
+              <li className=" text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+            <Link
+              to="profile"
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
+              activeClass="active"
+            >
+              Profile
+            </Link>
+          </li>
+          <li className=" text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+            <Link
+              to="team"
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
+              activeClass="active"
+            >
+              Team
+            </Link>
+          </li>
+          <li className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+            <Link
+              to="stats"
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
+              activeClass="active"
+            >
+              Stats
+            </Link>
+          </li>
+          <li className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+            <Link
+              to="calendar"
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
+              activeClass="active"
+            >
+              Calendar
+            </Link>
+          </li>
               </ul>
               <div className="flex flex-col gap-4">
                 <h2 className="text-base uppercase font-titleFont mb-4">

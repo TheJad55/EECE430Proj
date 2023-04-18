@@ -47,6 +47,10 @@ const Calendar = () => {
   };
 
   return (
+    <section
+    id="calendar"
+    className="w-full py-20 border-b-[1px] border-b-black"
+  >
     <Box m="20px">
       <Header title="Calendar" subtitle="Full Calendar Interactive Page" />
 
@@ -125,6 +129,7 @@ const Calendar = () => {
         </Box>
       </Box>
     </Box>
+    </section>
   );
 };
 

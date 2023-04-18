@@ -1,6 +1,6 @@
 import React from "react";
 import BasketballTeamTable from "../usableComponents/TeamTable";
-import Navbar2 from "../navbar/Navbar2";
+import Navbar4 from "../navbar/Navbar4";
 import CoachProfile from "../usableComponents/CoachProfile";
 import TeamStats from "../coachComponents/TeamStats";
 import TournamentTable from "../usableComponents/TournamentTable";
@@ -31,7 +31,7 @@ const styles = {
 const CoachHomep = () => {
   return (
     <div>
-      <Navbar2 />
+      <Navbar4 />
       <div className="max-w-screen-xl mx-auto">
         <h1 className="text-6xl font-bold text-white text-center mb-2 mt-10">
           Welcome to your profile

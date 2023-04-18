@@ -43,8 +43,12 @@ const TournamentTable = ({ tournamentIndex }) => {
 
   const totalGamesPlayed = (team) => team.wins + team.losses;
 
-const scrollableTable = `max-h-[80vh] overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-800 hover:scrollbar-thumb-gray-400`;
+  const scrollableTable = `max-h-[80vh] overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-800 hover:scrollbar-thumb-gray-400`;
   return (
+    <section
+    id="tournaments"
+    className="w-full py-20 border-b-[1px] border-b-black"
+  >
     <div className="grid grid-cols-1 gap-4 mt-4">
       <div className="bg-gray-800 rounded-md p-4">
         <h2 className="text-lg font-bold text-gray-300 mb-4">
@@ -92,6 +96,7 @@ const scrollableTable = `max-h-[80vh] overflow-y-auto scrollbar scrollbar-thin s
         </div>
       </div>
     </div>
+    </section>
   );
 };
 
