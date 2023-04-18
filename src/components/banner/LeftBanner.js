@@ -1,16 +1,16 @@
-import React from 'react'
+import React from "react";
 import { useTypewriter, Cursor } from "react-simple-typewriter";
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaReact } from "react-icons/fa";
 import { SiTailwindcss, SiFigma, SiNextdotjs } from "react-icons/si";
 
 const LeftBanner = () => {
-    const [text] = useTypewriter({
-      words: ["Management Tool.", "Virtual Organizer.", "Prediction Software."],
-      loop: true,
-      typeSpeed: 20,
-      deleteSpeed: 10,
-      delaySpeed: 2000,
-    });
+  const [text] = useTypewriter({
+    words: ["Management Tool.", "Virtual Organizer.", "Prediction Software."],
+    loop: true,
+    typeSpeed: 20,
+    deleteSpeed: 10,
+    delaySpeed: 2000,
+  });
   return (
     <div className="w-full lgl:w-1/2 flex flex-col gap-20">
       <div className="flex flex-col gap-5">
@@ -27,8 +27,9 @@ const LeftBanner = () => {
           />
         </h2>
         <p className="text-base font-bodyFont leading-6 tracking-wide">
-        Track your player's performance with our innovative player statistics tracking and forecasting 
-        feature! Organize your games, trainings and more using our user-friendly software!
+          Track your player's performance with our innovative player statistics
+          tracking and forecasting feature! Organize your games, trainings and
+          more using our user-friendly software!
         </p>
       </div>
       <div className="flex flex-col xl:flex-row gap-6 lgl:gap-0 justify-between">
@@ -48,28 +49,9 @@ const LeftBanner = () => {
             </span>
           </div>
         </div>
-        <div>
-          <h2 className="text-base uppercase font-titleFont mb-4">
-            BEST SKILL ON
-          </h2>
-          <div className="flex gap-4">
-            <span className="bannerIcon">
-              <FaReact />
-            </span>
-            <span className="bannerIcon">
-              <SiNextdotjs />
-            </span>
-            <span className="bannerIcon">
-              <SiTailwindcss />
-            </span>
-            <span className="bannerIcon">
-              <SiFigma />
-            </span>
-          </div>
-        </div>
       </div>
     </div>
   );
-}
+};
 
-export default LeftBanner
+export default LeftBanner;
