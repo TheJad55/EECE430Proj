@@ -8,74 +8,66 @@ const Footer = () => {
       <div className="w-full h-full flex flex-col gap-8">
         <img className="w-32" src={logo} alt="logo" />
         <div className="flex gap-4">
-          <span className="bannerIcon">
+          <a href="https://www.facebook.com" target="_blank" rel="noreferrer" className="bannerIcon">
             <FaFacebookF />
-          </span>
-          <span className="bannerIcon">
+          </a>
+          <a href="https://www.twitter.com" target="_blank" rel="noreferrer" className="bannerIcon">
             <FaTwitter />
-          </span>
-          <span className="bannerIcon">
+          </a>
+          <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" className="bannerIcon">
             <FaLinkedinIn />
-          </span>
+          </a>
         </div>
       </div>
-      <div className="w-full h-full">
-        <h3 className="text-xl uppercase text-designColor tracking-wider">
-          Professors
-        </h3>
-        <ul className="flex flex-col gap-4 font-titleFont font-medium py-6 overflow-hidden">
-          <li>
-            <span className="w-full text-lg relative hover:text-designColor duration-300 group cursor-pointer">
-              Ali Moukalled
-              <span className="w-full h-[1px] bg-designColor inline-flex absolute left-0 -bottom-1 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-300"></span>
-            </span>
-          </li>
-          <li>
-            <span className="w-full text-lg relative hover:text-designColor duration-300 group cursor-pointer">
-              Ali Hajj
-              <span className="w-full h-[1px] bg-designColor inline-flex absolute left-0 -bottom-1 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-300"></span>
-            </span>
-          </li>
 
-        </ul>
-      </div>
-      <div className="w-full h-full">
-        <h3 className="text-xl uppercase text-designColor tracking-wider">
-          RESOURCES
-        </h3>
-        <ul className="flex flex-col gap-4 font-titleFont font-medium py-6 overflow-hidden">
-          <li>
-            <span className="w-full text-lg relative hover:text-designColor duration-300 group cursor-pointer">
-              GitHub
-              <span className="w-full h-[1px] bg-designColor inline-flex absolute left-0 -bottom-1 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-300"></span>
-            </span>
-          </li>
-          <li>
-            <span className="w-full text-lg relative hover:text-designColor duration-300 group cursor-pointer">
-              StackOverflow
-              <span className="w-full h-[1px] bg-designColor inline-flex absolute left-0 -bottom-1 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-300"></span>
-            </span>
-          </li>
-          <li>
-            <span className="w-full text-lg relative hover:text-designColor duration-300 group cursor-pointer">
-              Youtube
-              <span className="w-full h-[1px] bg-designColor inline-flex absolute left-0 -bottom-1 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-300"></span>
-            </span>
-          </li>
-          <li>
-            <span className="w-full text-lg relative hover:text-designColor duration-300 group cursor-pointer">
-              Tailwind
-              <span className="w-full h-[1px] bg-designColor inline-flex absolute left-0 -bottom-1 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-300"></span>
-            </span>
-          </li>
-          <li>
-            <span className="w-full text-lg relative hover:text-designColor duration-300 group cursor-pointer">
-              Django
-              <span className="w-full h-[1px] bg-designColor inline-flex absolute left-0 -bottom-1 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-300"></span>
-            </span>
-          </li>
-        </ul>
-      </div>
+<div className="w-full h-full">
+  <h3 className="text-xl uppercase text-designColor tracking-wider">
+    RESOURCES
+  </h3>
+  <ul className="flex flex-col gap-4 font-titleFont font-medium py-6 overflow-hidden">
+    <li>
+      <a href="https://github.com" target="_blank" rel="noreferrer">
+        <span className="w-full text-lg relative hover:text-designColor duration-300 group cursor-pointer">
+          GitHub
+          <span className="w-full h-[1px] bg-designColor inline-flex absolute left-0 -bottom-1 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-300"></span>
+        </span>
+      </a>
+    </li>
+    <li>
+      <a href="https://stackoverflow.com" target="_blank" rel="noreferrer">
+        <span className="w-full text-lg relative hover:text-designColor duration-300 group cursor-pointer">
+          StackOverflow
+          <span className="w-full h-[1px] bg-designColor inline-flex absolute left-0 -bottom-1 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-300"></span>
+        </span>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.youtube.com" target="_blank" rel="noreferrer">
+        <span className="w-full text-lg relative hover:text-designColor duration-300 group cursor-pointer">
+          Youtube
+          <span className="w-full h-[1px] bg-designColor inline-flex absolute left-0 -bottom-1 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-300"></span>
+        </span>
+      </a>
+    </li>
+    <li>
+      <a href="https://tailwindcss.com" target="_blank" rel="noreferrer">
+        <span className="w-full text-lg relative hover:text-designColor duration-300 group cursor-pointer">
+          Tailwind
+          <span className="w-full h-[1px] bg-designColor inline-flex absolute left-0 -bottom-1 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-300"></span>
+        </span>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.djangoproject.com" target="_blank" rel="noreferrer">
+        <span className="w-full text-lg relative hover:text-designColor duration-300 group cursor-pointer">
+          Django
+          <span className="w-full h-[1px] bg-designColor inline-flex absolute left-0 -bottom-1 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-300"></span>
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>
+
       <div className="w-full h-full">
         <h3 className="text-xl uppercase text-designColor tracking-wider">
           DEVELOPERS

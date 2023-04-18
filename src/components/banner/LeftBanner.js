@@ -38,15 +38,15 @@ const LeftBanner = () => {
             Find us in
           </h2>
           <div className="flex gap-4">
-            <span className="bannerIcon">
-              <FaFacebookF />
-            </span>
-            <span className="bannerIcon">
-              <FaTwitter />
-            </span>
-            <span className="bannerIcon">
-              <FaLinkedinIn />
-            </span>
+          <a href="https://www.facebook.com" target="_blank" rel="noreferrer" className="bannerIcon">
+            <FaFacebookF />
+          </a>
+          <a href="https://www.twitter.com" target="_blank" rel="noreferrer" className="bannerIcon">
+            <FaTwitter />
+          </a>
+          <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" className="bannerIcon">
+            <FaLinkedinIn />
+          </a>
           </div>
         </div>
       </div>
