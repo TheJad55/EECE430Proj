@@ -23,6 +23,9 @@ const Navbar = () => {
           <li className="mr-[40px] text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
             <a href="/register">Register</a>
           </li>
+          <li className="mr-[40px] text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+            <a href="/teamregister">Team Register</a>
+          </li>
         </ul>
         <span
           onClick={() => setShowMenu(!showMenu)}
