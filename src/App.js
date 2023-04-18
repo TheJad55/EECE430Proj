@@ -8,7 +8,8 @@ import Homesignedin from "./components/homesignedin/homesignedin";
 import { Routes, Route } from "react-router-dom";
 import Tournaments from "./components/tournaments/Tournaments";
 import CoachHomep from "./components/coachhomepage/CoachHomep";
-   
+import TeamRegister from "./components/teamRegister/TeamRegister";
+
 function App() {
   return (
     <div className="w-full h-auto bg-bodyColor text-lightText ">
@@ -18,8 +19,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/homesignedin" element={<Homesignedin />} />
         <Route path="/coachhomep" element={<CoachHomep />} />
-
         <Route path="/tournaments" element={<Tournaments />} />
+        <Route path="/teamregister" element={<TeamRegister />} />
       </Routes>
       <Footer />
       <FooterBottom />
