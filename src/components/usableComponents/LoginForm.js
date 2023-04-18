@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   email: z.string().email("Email is invalid."),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters long.",
+  password: z.string().min(3, {
+    message: "Password must be at least 3 characters long.",
   }),
 });
 
@@ -21,11 +21,14 @@ const LoginForm = () => {
   } = useForm({
     resolver: zodResolver(schema),
   });
-
   const onSubmit = (data) => {
-    navigate("/homesignedin");
-    console.log(data);
-    navigate("/homesignedin");
+    if (data.email === "user@gmail.com" && data.password === "123") {
+      navigate("/homesignedin");
+    } else if (data.email === "user1@gmail.com" && data.password === "123") {
+      navigate("/coachhomep");
+    } else {
+      alert("Invalid email or password");
+    }
   };
 
   return (
