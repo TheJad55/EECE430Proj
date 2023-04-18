@@ -25,7 +25,7 @@ const LoginForm = () => {
   const onSubmit = (data) => {
     navigate("/homesignedin");
     console.log(data);
-    navigate("/homesignedin")
+    navigate("/homesignedin");
   };
 
   return (
@@ -38,18 +38,7 @@ const LoginForm = () => {
           <div
             className="w-full lg:w-1/2 flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center"
             style={{ backgroundImage: `url(${socialImage})` }}
-          >
-            <h1 className="text-white text-3xl mb-3">Welcome</h1>
-            <div>
-              <p className="text-white">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                suspendisse aliquam varius rutrum purus maecenas ac{" "}
-                <a href="#" className="text-purple-500 font-semibold">
-                  Learn more
-                </a>
-              </p>
-            </div>
-          </div>
+          ></div>
           <div className="w-full lg:w-1/2 py-16 px-12">
             <h2 className="text-3xl mb-4 text-black">Login</h2>
             <p className="mb-4 text-black">Sign in to your account.</p>
@@ -79,14 +68,12 @@ const LoginForm = () => {
                 )}
               </div>
               <div className="mt-5">
-                
                 <button
                   className="w-full bg-orange-500 py-3 text-center text-white transition-transform duration-300 hover:scale-105"
                   type="submit"
                 >
-                 Login 
+                  Login
                 </button>
-               
               </div>
             </form>
           </div>
