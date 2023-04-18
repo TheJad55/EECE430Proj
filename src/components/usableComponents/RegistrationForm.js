@@ -70,7 +70,9 @@ const RegistrationForm = () => {
           <div
             className="w-full lg:w-1/2 flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center"
             style={{ backgroundImage: `url(${socialImage})` }}
-          ></div>
+          >
+            {" "}
+          </div>
           <div className="w-full lg:w-1/2 py-16 px-12">
             <h2 className="text-3xl mb-4 text-black">Register</h2>
             <p className="mb-4 text-black">

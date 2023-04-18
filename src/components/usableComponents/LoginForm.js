@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +13,7 @@ const schema = z.object({
 });
 
 const LoginForm = () => {
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -27,7 +28,7 @@ const LoginForm = () => {
     } else if (data.email === "user1@gmail.com" && data.password === "123") {
       navigate("/coachhomep");
     } else {
-      alert("Invalid email or password");
+      setErrorMessage("Invalid email or password");
     }
   };
 
@@ -45,13 +46,14 @@ const LoginForm = () => {
           <div className="w-full lg:w-1/2 py-16 px-12">
             <h2 className="text-3xl mb-4 text-black">Login</h2>
             <p className="mb-4 text-black">Sign in to your account.</p>
+            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mt-5">
                 <input
                   id="email"
                   type="email"
                   placeholder="Email"
-                  className="border border-gray-400 py-1 px-2 w-full"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
                   {...register("email")}
                 />
                 {errors.email && (
@@ -63,7 +65,7 @@ const LoginForm = () => {
                   id="password"
                   type="password"
                   placeholder="Password"
-                  className="border border-gray-400 py-1 px-2 w-full"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
                   {...register("password")}
                 />
                 {errors.password && (
