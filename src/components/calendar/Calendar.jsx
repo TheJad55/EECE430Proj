@@ -159,41 +159,7 @@ const Calendar = () => {
   
         <Box display="flex" justifyContent="space-between">
           {/* CALENDAR SIDEBAR */}
-          <Box
-            flex="1 1 20%"
-            backgroundColor={colors.primary[400]}
-            p="15px"
-            borderRadius="4px"
-          >
-            <Typography variant="h5">Events</Typography>
-            <List>
-              {currentEvents.map((event) => (
-                <ListItem
-                  key={event.id}
-                  sx={{
-                    backgroundColor: " #2d3748",
-                    Color:" #2d3748",
-                    textColor:"white",
-                    margin: "10px 0",
-                    borderRadius: "2px",
-                  }}
-                >
-                  <ListItemText
-                    primary={event.title}
-                    secondary={
-                      <Typography>
-                        {new Date(event.start).toLocaleString("default", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </Typography>
-                    }
-                  />
-                </ListItem>
-              ))}
-            </List>
-          </Box>
+
   
           {/* CALENDAR */}
           <Box flex="1 1 100%" ml="15px">
