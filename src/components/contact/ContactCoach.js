@@ -46,10 +46,7 @@ const ContactCoach = () => {
     }
   };
   return (
-    <section
-      id="add"
-      className="w-full py-20 border-b-[1px] border-b-black"
-    >
+    <section id="add" className="w-full py-20 border-b-[1px] border-b-black">
       <div className="w-full">
         <div className="w-full h-auto flex flex-col lgl:flex-row justify-between">
           <ContactCoachLeft />
@@ -74,11 +71,11 @@ const ContactCoach = () => {
                     onChange={(e) => setPlayerName(e.target.value)}
                     value={playerName}
                     className={`${
-                    errMsg === "Player name is required!" && "outline-designColor"
+                      errMsg === "Player name is required!" &&
+                      "outline-designColor"
                     } contactInput`}
                     type="text"
-                    />
-
+                  />
                 </div>
                 <div className="w-full lgl:w-1/2 flex flex-col gap-4">
                   <p className="text-sm text-gray-400 uppercase tracking-wide">
@@ -100,81 +97,84 @@ const ContactCoach = () => {
                   Points
                 </p>
                 <input
-                onChange={(e) => setPoints(e.target.value)}
-                value={points}
-                className={`${
-                errMsg === "Points must be an integer!" && "outline-designColor"
-                } contactInput`}
-                type="text"
+                  onChange={(e) => setPoints(e.target.value)}
+                  value={points}
+                  className={`${
+                    errMsg === "Points must be an integer!" &&
+                    "outline-designColor"
+                  } contactInput`}
+                  type="text"
                 />
-
               </div>
               <div className="flex flex-col gap-4">
                 <p className="text-sm text-gray-400 uppercase tracking-wide">
                   Rebounds
                 </p>
                 <input
-                onChange={(e) => setRebounds(e.target.value)}
-                value={rebounds}
-                className={`${
-                errMsg === "Rebounds must be an integer!" && "outline-designColor"
-                } contactInput`}
-                type="text"
+                  onChange={(e) => setRebounds(e.target.value)}
+                  value={rebounds}
+                  className={`${
+                    errMsg === "Rebounds must be an integer!" &&
+                    "outline-designColor"
+                  } contactInput`}
+                  type="text"
                 />
-
               </div>
               <div className="flex flex-col gap-4">
                 <p className="text-sm text-gray-400 uppercase tracking-wide">
-                 Assists
+                  Assists
                 </p>
                 <input
-                onChange={(e) => setAssists(e.target.value)}
-                value={assists}
-                className={`${
-                    errMsg === "Assists must be an integer!" && "outline-designColor"
-                } contactInput`}
-                type="text"
+                  onChange={(e) => setAssists(e.target.value)}
+                  value={assists}
+                  className={`${
+                    errMsg === "Assists must be an integer!" &&
+                    "outline-designColor"
+                  } contactInput`}
+                  type="text"
                 />
-                </div>
-                <div className="flex flex-col gap-4">
+              </div>
+              <div className="flex flex-col gap-4">
                 <p className="text-sm text-gray-400 uppercase tracking-wide">
-                 Steals
+                  Steals
                 </p>
                 <input
-                onChange={(e) => setSteals(e.target.value)}
-                value={steals}
-                className={`${
-                    errMsg === "Steals must be an integer!" && "outline-designColor"
-                } contactInput`}
-                type="text"
+                  onChange={(e) => setSteals(e.target.value)}
+                  value={steals}
+                  className={`${
+                    errMsg === "Steals must be an integer!" &&
+                    "outline-designColor"
+                  } contactInput`}
+                  type="text"
                 />
-                </div>
-                 <div className="flex flex-col gap-4">
+              </div>
+              <div className="flex flex-col gap-4">
                 <p className="text-sm text-gray-400 uppercase tracking-wide">
-                 Blocks
+                  Blocks
                 </p>
                 <input
-                onChange={(e) => setBlocks(e.target.value)}
-                value={blocks}
-                className={`${
-                    errMsg === "Blocks must be an integer!" && "outline-designColor"
-                } contactInput`}
-                type="text"
+                  onChange={(e) => setBlocks(e.target.value)}
+                  value={blocks}
+                  className={`${
+                    errMsg === "Blocks must be an integer!" &&
+                    "outline-designColor"
+                  } contactInput`}
+                  type="text"
                 />
               </div>
               {/* Add Upload Stats button */}
               <button
-              onClick={handleSend}
-              className="w-full bg-gradient-to-r from-red-500 to-yellow-500 text-white text-base py-2 px-4 lgl:px-6 rounded-lg shadow-shadowOne hover:shadow-shadowTwo transition duration-300 ease-in-out focus:outline-none"
-            >
-              Upload Stats
-            </button>
-          </form>
+                onClick={handleSend}
+                className="w-full bg-gradient-to-r from-red-500 to-yellow-500 text-white text-base py-2 px-4 lgl:px-6 rounded-lg shadow-shadowOne hover:shadow-shadowTwo transition duration-300 ease-in-out focus:outline-none"
+              >
+                Upload Stats
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
   );
-}
+};
 
 export default ContactCoach;

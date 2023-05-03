@@ -20,7 +20,6 @@ const coach = {
 };
 const styles = {
   container: {
-
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "flex-start",
@@ -53,17 +52,15 @@ const CoachHomep = () => {
             <TeamStats />
           </div>
           <h1 className="text-6xl font-bold text-white mt-8">
-          <span className="text-designColor capitalize">Tournaments</span>
-        </h1>
-          <div style={styles.container}>
-        <TournamentTable />
-        <TournamentOptions />
-      </div>
-      <h1 className="text-6xl font-bold text-white mt-20">
-          Add Player <span className="text-designColor capitalize">Stats</span>
-        </h1>
-      <ContactCoach />
-      <Calendar />
+            <span className="text-designColor capitalize">Tournaments</span>
+          </h1>
+
+          <h1 className="text-6xl font-bold text-white mt-20">
+            Add Player{" "}
+            <span className="text-designColor capitalize">Stats</span>
+          </h1>
+          <ContactCoach />
+          <Calendar />
         </div>
       </div>
     </div>

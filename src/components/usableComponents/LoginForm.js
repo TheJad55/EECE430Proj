@@ -4,9 +4,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import socialImage from "../../assets/images/LoginReg/social.jpg";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const schema = z.object({
-  email: z.string().email("Email is invalid."),
+  username: z.string().min(3, "Username must be at least 3 characters long."),
   password: z.string().min(3, {
     message: "Password must be at least 3 characters long.",
   }),
@@ -22,13 +23,33 @@ const LoginForm = () => {
   } = useForm({
     resolver: zodResolver(schema),
   });
-  const onSubmit = (data) => {
-    if (data.email === "user@gmail.com" && data.password === "123") {
-      navigate("/homesignedin");
-    } else if (data.email === "user1@gmail.com" && data.password === "123") {
-      navigate("/coachhomep");
-    } else {
-      setErrorMessage("Invalid email or password");
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": Cookies.get("csrftoken"),
+        },
+        body: JSON.stringify({
+          username: data.username,
+          password: data.password,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.access_token) {
+        sessionStorage.setItem("access_token", result.access_token);
+        navigate("/homesignedin");
+      } else if (result.error === "Invalid credentials") {
+        setErrorMessage("Invalid username or password");
+      } else {
+        setErrorMessage("Unknown error occurred");
+      }
+    } catch (error) {
+      setErrorMessage("Error connecting to the server");
     }
   };
 
@@ -50,14 +71,14 @@ const LoginForm = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mt-5">
                 <input
-                  id="email"
-                  type="email"
-                  placeholder="Email"
+                  id="username"
+                  type="text"
+                  placeholder="Username"
                   className="border border-gray-400 py-1 px-2 w-full text-black"
-                  {...register("email")}
+                  {...register("username")}
                 />
-                {errors.email && (
-                  <p className="text-red-500">{errors.email.message}</p>
+                {errors.username && (
+                  <p className="text-red-500">{errors.username.message}</p>
                 )}
               </div>
               <div className="mt-5">

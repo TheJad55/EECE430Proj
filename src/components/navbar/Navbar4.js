@@ -11,9 +11,9 @@ const Navbar4 = () => {
   return (
     <div className="w-full h-24 sticky top-0 z-50 bg-bodyColor mx-auto flex justify-between items-center font-titleFont border-b-[1px] border-b-gray-600">
       <div className="ml-[40px]">
-          <a href="/">
-            <img src={logo} alt="logo" />
-          </a>
+        <a href="/">
+          <img src={logo} alt="logo" />
+        </a>
       </div>
       <div>
         <ul className="mr-[40px] hidden mdl:inline-flex items-center gap-6 lg:gap-10">
@@ -39,18 +39,6 @@ const Navbar4 = () => {
               activeClass="active"
             >
               Team
-            </Link>
-          </li>
-          <li className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
-            <Link
-              to="tournaments"
-              spy={true}
-              smooth={true}
-              offset={-70}
-              duration={500}
-              activeClass="active"
-            >
-              Tournaments
             </Link>
           </li>
           <li className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
@@ -96,54 +84,54 @@ const Navbar4 = () => {
                 </p>
               </div>
               <ul className="flex flex-col gap-4">
-              <li className=" text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
-            <Link
-              to="profile"
-              spy={true}
-              smooth={true}
-              offset={-70}
-              duration={500}
-              activeClass="active"
-            >
-              Profile
-            </Link>
-          </li>
-          <li className=" text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
-            <Link
-              to="stats"
-              spy={true}
-              smooth={true}
-              offset={-70}
-              duration={500}
-              activeClass="active"
-            >
-              Team
-            </Link>
-          </li>
-          <li className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
-            <Link
-              to="stats"
-              spy={true}
-              smooth={true}
-              offset={-70}
-              duration={500}
-              activeClass="active"
-            >
-              Stats
-            </Link>
-          </li>
-          <li className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
-            <Link
-              to="calendar"
-              spy={true}
-              smooth={true}
-              offset={-70}
-              duration={500}
-              activeClass="active"
-            >
-              Calendar
-            </Link>
-          </li>
+                <li className=" text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+                  <Link
+                    to="profile"
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
+                    activeClass="active"
+                  >
+                    Profile
+                  </Link>
+                </li>
+                <li className=" text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+                  <Link
+                    to="stats"
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
+                    activeClass="active"
+                  >
+                    Team
+                  </Link>
+                </li>
+                <li className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+                  <Link
+                    to="stats"
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
+                    activeClass="active"
+                  >
+                    Stats
+                  </Link>
+                </li>
+                <li className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+                  <Link
+                    to="calendar"
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
+                    activeClass="active"
+                  >
+                    Calendar
+                  </Link>
+                </li>
               </ul>
               <div className="flex flex-col gap-4">
                 <h2 className="text-base uppercase font-titleFont mb-4">

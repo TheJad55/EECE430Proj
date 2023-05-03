@@ -44,7 +44,7 @@ const PlayerStats = () => {
     {
       name: "Kobe Bryant",
       games: [
-        { points: 25, rebounds: 4, assists: 6, steals: 1, blocks: 0 },
+        { points: 25, rebounds: 4, assists: 6, steals: 1, blockds: 0 },
         { points: 30, rebounds: 7, assists: 4, steals: 2, blocks: 0 },
         { points: 27, rebounds: 5, assists: 3, steals: 1, blocks: 1 },
         { points: 35, rebounds: 9, assists: 5, steals: 3, blocks: 2 },
