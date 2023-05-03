@@ -16,6 +16,7 @@ const schema = z.object({
 const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
+  const [isTeamManager, setIsTeamManager] = useState(false);
   const {
     handleSubmit,
     register,
@@ -26,23 +27,32 @@ const LoginForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/login", {
+      const apiUrl = isTeamManager
+        ? "http://127.0.0.1:8000/teamlogin/"
+        : "http://127.0.0.1:8000/login";
+      const requestData = isTeamManager
+        ? {
+            TeamManagerusername: data.username,
+            TeamManagerpassword: data.password,
+          }
+        : {
+            username: data.username,
+            password: data.password,
+          };
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "X-CSRFToken": Cookies.get("csrftoken"),
         },
-        body: JSON.stringify({
-          username: data.username,
-          password: data.password,
-        }),
+        body: JSON.stringify(requestData),
       });
 
       const result = await response.json();
 
       if (result.access_token) {
         sessionStorage.setItem("access_token", result.access_token);
-        navigate("/homesignedin");
+        navigate(isTeamManager ? "/coachhomep" : "/homesignedin");
       } else if (result.error === "Invalid credentials") {
         setErrorMessage("Invalid username or password");
       } else {
@@ -80,6 +90,18 @@ const LoginForm = () => {
                 {errors.username && (
                   <p className="text-red-500">{errors.username.message}</p>
                 )}
+              </div>
+              <div className="mt-5">
+                <label htmlFor="teamManager" className="text-black">
+                  <input
+                    id="teamManager"
+                    type="checkbox"
+                    className="mr-2"
+                    checked={isTeamManager}
+                    onChange={(e) => setIsTeamManager(e.target.checked)}
+                  />
+                  Login as team manager
+                </label>
               </div>
               <div className="mt-5">
                 <input

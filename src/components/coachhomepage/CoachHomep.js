@@ -32,12 +32,6 @@ const CoachHomep = () => {
     <div>
       <Navbar4 />
       <div className="max-w-screen-xl mx-auto">
-        <h1 className="text-6xl font-bold text-white text-center mb-2 mt-10">
-          Welcome to your profile
-        </h1>
-        <h2 className="text-6xl font-bold text-designColor capitalize text-center">
-          {coach.name}
-        </h2>
         <div className="w-full py-20 border-b-[1px] border-b-black">
           <CoachProfile />
         </div>
