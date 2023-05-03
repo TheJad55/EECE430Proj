@@ -19,7 +19,6 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/homesignedin" element={<Homesignedin />} />
         <Route path="/coachhomep" element={<CoachHomep />} />
-        <Route path="/tournaments" element={<Tournaments />} />
         <Route path="/teamregister" element={<TeamRegister />} />
       </Routes>
       <Footer />

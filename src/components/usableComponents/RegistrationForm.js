@@ -7,6 +7,9 @@ import socialImage from "../../assets/images/LoginReg/social.jpg";
 const genderOptions = ["Male", "Female", "Other"];
 
 const schema = z.object({
+  username: z
+    .string()
+    .min(3, { message: "Username must be at least 3 characters long." }),
   firstName: z
     .string()
     .min(2, { message: "First name must be at least 2 characters long." }),
@@ -14,26 +17,28 @@ const schema = z.object({
     .string()
     .min(2, { message: "Last name must be at least 2 characters long." }),
   email: z.string().email("Email is invalid."),
-  dob: z.string().refine((dateString) => {
-    const date = new Date(dateString);
-    const currentDate = new Date();
-    const year1900 = new Date("1900-01-01");
-    return !isNaN(date.valueOf()) && date <= currentDate && date >= year1900;
-  }, "Date of birth is invalid."),
-  address: z
-    .string()
-    .min(5, { message: "Address must be at least 5 characters long." }),
-  gender: z
-    .union([z.enum(genderOptions), z.string().nonempty()])
-    .refine((value) => genderOptions.includes(value), {
-      message: "Invalid gender option.",
-    }),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long." }),
   confirmPassword: z.string().min(8, {
     message: "Confirm password must be at least 8 characters long.",
   }),
+
+  age: z
+    .number()
+    .min(1, { message: "Age must be at least 1." })
+    .max(120, { message: "Age must be less than or equal to 120." }),
+  team: z
+    .string()
+    .min(2, { message: "Team name must be at least 2 characters long." }),
+  position: z
+    .string()
+    .min(2, { message: "Position must be at least 2 characters long." }),
+  height: z.number().min(0, { message: "Height must be a positive number." }),
+  weight: z.number().min(0, { message: "Weight must be a positive number." }),
+  college: z
+    .string()
+    .min(2, { message: "College name must be at least 2 characters long." }),
 });
 
 schema.refine((data) => data.password === data.confirmPassword, {
@@ -51,9 +56,46 @@ const RegistrationForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit1 = (data, e) => {
-    console.log(data);
-    setShowSuccessAlert(true);
+  const onSubmit1 = async (data, e) => {
+    console.log("Submitting data:", data); // Add this line to log the data
+    e.preventDefault();
+    const { confirmPassword, firstName, lastName, ...filteredData } = data;
+    // Update field names and add accountBalance
+    filteredData.Firstname = firstName;
+    filteredData.Lastname = lastName;
+    filteredData.Age = data.age;
+    filteredData.Team = data.team;
+    filteredData.Position = data.position;
+    filteredData.Height = data.height;
+    filteredData.Weight = data.weight;
+    filteredData.College = data.college;
+    filteredData.accountBalance = 0;
+
+    console.log("Submitting data:", filteredData); // Add this line to log the data
+
+    const apiUrl = `http://127.0.0.1:8000/user`;
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(filteredData),
+      });
+
+      if (response.ok) {
+        setShowSuccessAlert(true);
+      } else {
+        console.error(
+          "Error submitting form: ",
+          response.status,
+          response.statusText
+        );
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   const handleAlertDismiss = () => {
@@ -79,10 +121,21 @@ const RegistrationForm = () => {
               Create your account. It's free and only takes a minute.
             </p>
             <form onSubmit={handleSubmit(onSubmit1)}>
+              <div className="mt-5">
+                <input
+                  id="username"
+                  type="text"
+                  placeholder="Username"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
+                  {...register("username")}
+                />
+                {errors.username && (
+                  <p className="text-red-500">{errors.username.message}</p>
+                )}
+              </div>
               {/* First Name and Last Name */}
-              <div className="mt-5 flex">
-                {/* First Name */}
-                <div className="w-1/2 pr-2">
+              <div className="flex mt-5">
+                <div className="w-1/2 mr-2">
                   <input
                     id="firstName"
                     type="text"
@@ -94,9 +147,7 @@ const RegistrationForm = () => {
                     <p className="text-red-500">{errors.firstName.message}</p>
                   )}
                 </div>
-
-                {/* Last Name */}
-                <div className="w-1/2 pl-2">
+                <div className="w-1/2 ml-2">
                   <input
                     id="lastName"
                     type="text"
@@ -154,53 +205,84 @@ const RegistrationForm = () => {
                 )}
               </div>
 
-              {/* Date of Birth */}
+              {/* Additional input fields */}
               <div className="mt-5">
                 <input
-                  id="dob"
-                  type="date"
-                  placeholder="Date of Birth"
+                  id="age"
+                  type="number"
+                  placeholder="Age"
                   className="border border-gray-400 py-1 px-2 w-full text-black"
-                  {...register("dob")}
+                  {...register("age", { valueAsNumber: true })}
                 />
-                {errors.dob && (
-                  <p className="text-red-500">{errors.dob.message}</p>
+                {errors.age && (
+                  <p className="text-red-500">{errors.age.message}</p>
                 )}
               </div>
 
-              {/* Address */}
               <div className="mt-5">
                 <input
-                  id="address"
+                  id="team"
                   type="text"
-                  placeholder="Address"
+                  placeholder="Team"
                   className="border border-gray-400 py-1 px-2 w-full text-black"
-                  {...register("address")}
+                  {...register("team")}
                 />
-                {errors.address && (
-                  <p className="text-red-500">{errors.address.message}</p>
+                {errors.team && (
+                  <p className="text-red-500">{errors.team.message}</p>
                 )}
               </div>
 
-              {/* Gender */}
               <div className="mt-5">
-                <select
-                  id="gender"
+                <input
+                  id="position"
+                  type="text"
+                  placeholder="Position"
                   className="border border-gray-400 py-1 px-2 w-full text-black"
-                  {...register("gender")}
-                >
-                  <option value="">Select Gender</option>
-                  {genderOptions.map((option) => (
-                    <option key={option} value={option} className="text-black">
-                      {option}
-                    </option>
-                  ))}
-                </select>
-                {errors.gender && (
-                  <p className="text-red-500">{errors.gender.message}</p>
+                  {...register("position")}
+                />
+                {errors.position && (
+                  <p className="text-red-500">{errors.position.message}</p>
                 )}
               </div>
 
+              <div className="mt-5">
+                <input
+                  id="height"
+                  type="number"
+                  placeholder="Height"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
+                  {...register("height", { valueAsNumber: true })}
+                />
+                {errors.height && (
+                  <p className="text-red-500">{errors.height.message}</p>
+                )}
+              </div>
+
+              <div className="mt-5">
+                <input
+                  id="weight"
+                  type="number"
+                  placeholder="Weight"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
+                  {...register("weight", { valueAsNumber: true })}
+                />
+                {errors.weight && (
+                  <p className="text-red-500">{errors.weight.message}</p>
+                )}
+              </div>
+
+              <div className="mt-5">
+                <input
+                  id="college"
+                  type="text"
+                  placeholder="College"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
+                  {...register("college")}
+                />
+                {errors.college && (
+                  <p className="text-red-500">{errors.college.message}</p>
+                )}
+              </div>
               {/* Submit Button */}
               <div className="mt-5">
                 <button

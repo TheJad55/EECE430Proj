@@ -1,26 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Title from "../layouts/Title";
 import ContactCoachLeft from "./ContactCoachLeft";
 
 const ContactCoach = () => {
-  const [playerName, setPlayerName] = useState("");
+  const [usernames, setUsernames] = useState([]);
+  const [gameIds, setGameIds] = useState([]);
+  const [selectedUsername, setSelectedUsername] = useState("");
+  const [selectedGameId, setSelectedGameId] = useState(null);
   const [points, setPoints] = useState("");
   const [rebounds, setRebounds] = useState("");
   const [assists, setAssists] = useState("");
   const [steals, setSteals] = useState("");
   const [blocks, setBlocks] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const [token, setToken] = useState("your_token_here");
+
+  useEffect(() => {
+    async function fetchUsernames() {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/getteamates/team", {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+          },
+        });
+        const data = await response.json();
+        console.log("Fetched usernames:", data);
+        if (Array.isArray(data)) {
+          setUsernames(data);
+        }
+      } catch (error) {
+        console.error(`Error fetching usernames: ${error}`);
+      }
+    }
+
+    async function fetchGameIds() {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/games");
+        const data = await response.json();
+        setGameIds(data);
+      } catch (error) {
+        console.error(`Error fetching game ids: ${error}`);
+      }
+    }
+
+    fetchUsernames();
+    fetchGameIds();
+  }, [token]);
 
   const isInteger = (str) => {
     const num = parseInt(str, 10);
     return !isNaN(num) && str === String(num);
   };
 
-  const handleSend = (e) => {
+  const handleSend = async (e) => {
     e.preventDefault();
-    if (playerName === "") {
+    if (selectedUsername === "") {
       setErrMsg("Player name is required!");
     } else if (!points || !isInteger(points)) {
       setErrMsg("Points must be an integer!");
@@ -33,18 +68,45 @@ const ContactCoach = () => {
     } else if (!blocks || !isInteger(blocks)) {
       setErrMsg("Blocks must be an integer!");
     } else {
-      setSuccessMsg(
-        `Player stats for ${playerName} have been submitted successfully!`
-      );
-      setErrMsg("");
-      setPlayerName("");
-      setPoints("");
-      setRebounds("");
-      setAssists("");
-      setSteals("");
-      setBlocks("");
+      try {
+        const response = await fetch("http://127.0.0.1:8000/stats", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            player: selectedUsername,
+            game_number: selectedGameId,
+            points: parseInt(points),
+            assists: parseInt(assists),
+            rebounds: parseInt(rebounds),
+            steals: parseInt(steals),
+            blocks: parseInt(blocks),
+          }),
+        });
+
+        if (response.ok) {
+          setSuccessMsg(
+            `Player stats for ${selectedUsername} have been submitted successfully!`
+          );
+          setErrMsg("");
+          setSelectedUsername("");
+          setSelectedGameId(null);
+          setPoints("");
+          setRebounds("");
+          setAssists("");
+          setSteals("");
+          setBlocks("");
+        } else {
+          // Handle error
+          console.error(`Error submitting data: ${response.status}`);
+        }
+      } catch (error) {
+        console.error(`Error submitting data: ${error}`);
+      }
     }
   };
+
   return (
     <section id="add" className="w-full py-20 border-b-[1px] border-b-black">
       <div className="w-full">
@@ -67,29 +129,35 @@ const ContactCoach = () => {
                   <p className="text-sm text-gray-400 uppercase tracking-wide">
                     Player Name
                   </p>
-                  <input
-                    onChange={(e) => setPlayerName(e.target.value)}
-                    value={playerName}
-                    className={`${
-                      errMsg === "Player name is required!" &&
-                      "outline-designColor"
-                    } contactInput`}
-                    type="text"
-                  />
+                  <select
+                    onChange={(e) => setSelectedUsername(e.target.value)}
+                    value={selectedUsername}
+                    className="contactInput"
+                  >
+                    <option value="">Select a player</option>
+                    {usernames.map((username, index) => (
+                      <option key={index} value={username}>
+                        {username}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="w-full lgl:w-1/2 flex flex-col gap-4">
                   <p className="text-sm text-gray-400 uppercase tracking-wide">
                     Game Number
                   </p>
-                  <input
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    value={phoneNumber}
-                    className={`${
-                      errMsg === "Phone number is required!" &&
-                      "outline-designColor"
-                    } contactInput`}
-                    type="text"
-                  />
+                  <select
+                    onChange={(e) => setSelectedGameId(e.target.value)}
+                    value={selectedGameId}
+                    className="contactInput"
+                  >
+                    <option value="">Select a game</option>
+                    {gameIds.map((gameId, index) => (
+                      <option key={index} value={gameId}>
+                        {gameId}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
               <div className="flex flex-col gap-4">

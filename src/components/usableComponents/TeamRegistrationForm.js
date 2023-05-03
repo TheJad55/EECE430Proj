@@ -2,83 +2,53 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Select from "react-select";
 import backgroundImage from "../../assets/images/background2.jpeg";
-
-const teamColors = [
-  { value: "Red", label: "Red", hex: "#FF0000" },
-  { value: "Blue", label: "Blue", hex: "#0000FF" },
-  { value: "Green", label: "Green", hex: "#008000" },
-  { value: "Yellow", label: "Yellow", hex: "#FFFF00" },
-  { value: "Orange", label: "Orange", hex: "#FFA500" },
-  { value: "Purple", label: "Purple", hex: "#800080" },
-];
-
 const schema = z.object({
-  teamName: z
+  TeamName: z
     .string()
     .min(2, { message: "Team name must be at least 2 characters long." }),
-  coachName: z
+  TeamManagerUserName: z
     .string()
-    .min(2, { message: "Coach name must be at least 2 characters long." }),
-  email: z.string().email("Email is invalid."),
-  phoneNumber: z.string(),
-  address: z
-    .string()
-    .min(5, { message: "Address must be at least 5 characters long." }),
-  teamColor: z
-    .string()
-    .refine((value) => teamColors.some((color) => color.name === value), {
-      message: "Invalid team color option.",
-    }),
-  coachId: z.string().refine((value) => /^\d{9}$/.test(value), {
-    message: "Coach ID must be exactly 9 digits long.",
-  }),
+    .min(2, { message: "Username must be at least 2 characters long." }),
+  TeamManagerEmail: z.string().email("Email is invalid."),
+  TeamManagerPassword: z.string(),
+  TeamManagerFirstname: z.string(),
+  TeamManagerLastname: z.string(),
+  Country: z.string(),
 });
 
-const RegistrationForm = () => {
+const TeamRegistrationForm = () => {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const {
     handleSubmit,
     register,
-    formState: { errors, isValid },
-    setValue,
-    watch,
+    formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
   });
-  const [selectedColor, setSelectedColor] = useState(null);
+  const onSubmit = async (data, e) => {
+    data.GamesWon = 0;
+    data.GamesLost = 0;
 
-  const onSubmit1 = (data, e) => {
-    console.log(data);
-    setShowSuccessAlert(true);
-  };
+    try {
+      const response = await fetch("http://127.0.0.1:8000/teams", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-  const handleAlertDismiss = () => {
-    setShowSuccessAlert(false);
-  };
-  const handleColorChange = (selectedOption) => {
-    setSelectedColor(selectedOption);
-    setValue("teamColor", selectedOption.value);
-  };
-
-  // Register the teamColor field
-  register("teamColor");
-
-  const colorStyles = {
-    option: (provided, state) => ({
-      ...provided,
-      paddingLeft: "2rem",
-    }),
-    singleValue: (provided) => {
-      const color = teamColors.find(
-        (color) => color.value === watch("teamColor")
-      );
-      return {
-        ...provided,
-        paddingLeft: "2rem",
-      };
-    },
+      if (response.ok) {
+        setShowSuccessAlert(true);
+      } else {
+        // Handle error - you can update the state to display an error message if needed
+        console.error(`Error submitting data: ${response.status}`);
+      }
+    } catch (error) {
+      // Handle network error
+      console.error(`Network error: ${error}`);
+    }
   };
 
   return (
@@ -97,117 +67,109 @@ const RegistrationForm = () => {
             <p className="mb-4 text-black">
               Register your basketball team. It's free and only takes a minute.
             </p>
-            <form onSubmit={handleSubmit(onSubmit1)}>
-              {/* Coach ID */}
+
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mt-5">
-                <input
-                  id="coachId"
-                  type="text"
-                  placeholder="Coach ID"
-                  className="border border-gray-400 py-1 px-2 w-full text-black"
-                  {...register("coachId")}
-                />
-                {errors.coachId && (
-                  <p className="text-red-500">{errors.coachId.message}</p>
-                )}
-              </div>
-              {/* Team Name */}
-              <div className="mt-5">
+                <label htmlFor="teamName">Team Name</label>
                 <input
                   id="teamName"
                   type="text"
-                  placeholder="Team Name"
+                  placeholder="Enter team name"
                   className="border border-gray-400 py-1 px-2 w-full text-black"
-                  {...register("teamName")}
+                  {...register("TeamName")}
                 />
-                {errors.teamName && (
-                  <p className="text-red-500">{errors.teamName.message}</p>
+                {errors.TeamName && (
+                  <p className="text-red-500">{errors.TeamName.message}</p>
                 )}
               </div>
-              {/* Team Color */}
               <div className="mt-5">
-                <Select
-                  value={selectedColor}
-                  options={teamColors}
-                  styles={colorStyles}
-                  onChange={handleColorChange}
-                  placeholder="Select Team Color"
-                  formatOptionLabel={(data) => (
-                    <div>
-                      {data.label}
-                      <span
-                        style={{
-                          display: "inline-block",
-                          marginLeft: "1rem",
-                          width: "1rem",
-                          height: "1rem",
-                          backgroundColor: data.hex,
-                          borderRadius: "50%",
-                        }}
-                      ></span>
-                    </div>
-                  )}
-                />
-                {errors.teamColor && (
-                  <p className="text-red-500">{errors.teamColor.message}</p>
-                )}
-              </div>
-              {/* Coach Name */}
-              <div className="mt-5">
+                <label htmlFor="teamManagerUserName">Username</label>
                 <input
-                  id="coachName"
+                  id="teamManagerUserName"
                   type="text"
-                  placeholder="Coach Name"
+                  placeholder="Enter username"
                   className="border border-gray-400 py-1 px-2 w-full text-black"
-                  {...register("coachName")}
+                  {...register("TeamManagerUserName")}
                 />
-                {errors.coachName && (
-                  <p className="text-red-500">{errors.coachName.message}</p>
+                {errors.TeamManagerUserName && (
+                  <p className="text-red-500">
+                    {errors.TeamManagerUserName.message}
+                  </p>
                 )}
               </div>
-
-              {/* Email */}
               <div className="mt-5">
+                <label htmlFor="teamManagerEmail">Email</label>
                 <input
-                  id="email"
-                  type="email"
-                  placeholder="Email"
-                  className="border border-gray-400 py-1 px-2 w-full text-black"
-                  {...register("email")}
-                />
-                {errors.email && (
-                  <p className="text-red-500">{errors.email.message}</p>
-                )}
-              </div>
-
-              {/* Phone Number */}
-              <div className="mt-5">
-                <input
-                  id="phoneNumber"
-                  type="tel"
-                  placeholder="Phone Number"
-                  className="border border-gray-400 py-1 px-2 w-full text-black"
-                  {...register("phoneNumber")}
-                />
-                {errors.phoneNumber && (
-                  <p className="text-red-500">{errors.phoneNumber.message}</p>
-                )}
-              </div>
-
-              {/* Address */}
-              <div className="mt-5">
-                <input
-                  id="address"
+                  id="teamManagerEmail"
                   type="text"
-                  placeholder="Address"
+                  placeholder="Enter email address"
                   className="border border-gray-400 py-1 px-2 w-full text-black"
-                  {...register("address")}
+                  {...register("TeamManagerEmail")}
                 />
-                {errors.address && (
-                  <p className="text-red-500">{errors.address.message}</p>
+                {errors.TeamManagerEmail && (
+                  <p className="text-red-500">
+                    {errors.TeamManagerEmail.message}
+                  </p>
                 )}
               </div>
-
+              <div className="mt-5">
+                <label htmlFor="teamManagerPassword">Password</label>
+                <input
+                  id="teamManagerPassword"
+                  type="password"
+                  placeholder="Enter password"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
+                  {...register("TeamManagerPassword")}
+                />
+                {errors.TeamManagerPassword && (
+                  <p className="text-red-500">
+                    {errors.TeamManagerPassword.message}
+                  </p>
+                )}
+              </div>
+              <div className="mt-5">
+                <label htmlFor="teamManagerFirstname">First Name</label>
+                <input
+                  id="teamManagerFirstname"
+                  type="text"
+                  placeholder="Enter first name"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
+                  {...register("TeamManagerFirstname")}
+                />
+                {errors.TeamManagerFirstname && (
+                  <p className="text-red-500">
+                    {errors.TeamManagerFirstname.message}
+                  </p>
+                )}
+              </div>
+              <div className="mt-5">
+                <label htmlFor="teamManagerLastname">Last Name</label>
+                <input
+                  id="teamManagerLastname"
+                  type="text"
+                  placeholder="Enter last name"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
+                  {...register("TeamManagerLastname")}
+                />
+                {errors.TeamManagerLastname && (
+                  <p className="text-red-500">
+                    {errors.TeamManagerLastname.message}
+                  </p>
+                )}
+              </div>
+              <div className="mt-5">
+                <label htmlFor="country">Country</label>
+                <input
+                  id="country"
+                  type="text"
+                  placeholder="Enter country"
+                  className="border border-gray-400 py-1 px-2 w-full text-black"
+                  {...register("Country")}
+                />
+                {errors.Country && (
+                  <p className="text-red-500">{errors.Country.message}</p>
+                )}
+              </div>
               {/* Submit Button */}
               <div className="mt-5">
                 <button
@@ -234,4 +196,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default TeamRegistrationForm;

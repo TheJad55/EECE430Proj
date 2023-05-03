@@ -1,32 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import teamLogo from "../../assets/images/playerIMG/teamLogo.png";
-const PlayerTeam = () => {
-  
-  const player = {
-    imageUrl: teamLogo,
-    name: "LeBron James",
-    age: 38,
-    team: "Boston Celtics",
-    position: "Small Forward",
-    height: "6'9\"",
-    weight: "250 lbs",
-    college: "St. Vincent-St. Mary High School",
-  };
 
-  const team ={
-    coach: "John Doe",
-    wins: 4,
-    Standings: "3rd",
-    Next: "2/7/2023",
-    training: "1/7/2023",
-    message: "Do not miss training! It is essential for our next game!"
+const PlayerTeam = () => {
+  const [teamData, setTeamData] = useState(null);
+
+  useEffect(() => {
+    const fetchTeamData = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/teams/user", {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+          },
+        });
+
+        const data = await response.json();
+        setTeamData(data);
+      } catch (error) {
+        console.error("Error fetching team data:", error);
+      }
+    };
+
+    fetchTeamData();
+  }, []);
+
+  if (!teamData) {
+    return <div>Loading...</div>;
   }
 
   return (
-    <section
-      id="team"
-      className="w-full py-20 border-b-[1px] border-b-black"
-    >
+    <section id="team" className="w-full py-20 border-b-[1px] border-b-black">
       <div className="content-center mx-auto">
         <h1 className="text-6xl font-bold text-white text-center mb-5">
           Your <span className="text-designColor capitalize">Team</span>
@@ -36,30 +38,26 @@ const PlayerTeam = () => {
             <div className="w-1/2">
               <img
                 className="rounded-lg object-contain w-full h-96"
-                src={player.imageUrl}
-                alt={player.name}
+                src={teamLogo}
+                alt={teamData.TeamName}
                 style={{
-                  maxWidth: '100%',
-                  height: 'auto'
+                  maxWidth: "100%",
+                  height: "auto",
                 }}
               />
             </div>
             <div className="w-2/3 ml-12">
-              <h2 className="text-4xl font-semibold mb-6">{player.team}</h2>
+              <h2 className="text-4xl font-semibold mb-6">
+                {teamData.TeamName}
+              </h2>
               <p className="text-xl md:text-2xl mb-2 md:mb-4">
-                <strong>Coach:</strong> {team.coach}
+                <strong>Country:</strong> {teamData.Country}
               </p>
               <p className="text-xl md:text-2xl mb-2 md:mb-4">
-                <strong>Team Wins:</strong> {team.Standings}
+                <strong>Games Won:</strong> {teamData.GamesWon}
               </p>
               <p className="text-xl md:text-2xl mb-2 md:mb-4">
-                <strong>Next Game:</strong> {team.Next}
-              </p>
-              <p className="text-xl md:text-2xl mb-2 md:mb-4">
-                <strong>Training:</strong> {team.training}
-              </p>
-              <p className="text-xl md:text-2xl mb-2 md:mb-4">
-                <strong>Message:</strong> <ul className="mt-[5%]">{team.message}</ul>
+                <strong>Games Lost:</strong> {teamData.GamesLost}
               </p>
             </div>
           </div>
