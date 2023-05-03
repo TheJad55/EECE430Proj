@@ -19,6 +19,7 @@
     "axios": "^1.4.0",
     "chart.js": "^4.2.1",
     "chat.js": "^1.0.2",
+    "date-fns": "^2.30.0",
     "framer-motion": "^10.11.2",
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
