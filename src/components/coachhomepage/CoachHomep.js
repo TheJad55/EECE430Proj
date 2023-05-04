@@ -31,6 +31,10 @@ const CoachHomep = () => {
             <span className="text-designColor capitalize">Stats</span>
           </h1>
           <ContactCoach />
+          <h1 className="text-6xl font-bold text-white mt-20">
+            Player{" "}
+            <span className="text-designColor capitalize">Payment</span>
+          </h1>
           <CoachPay />
           <Calendar />
           <h1 className="text-6xl font-bold text-white mt-20 mb-20">

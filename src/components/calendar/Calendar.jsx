@@ -108,7 +108,7 @@ const Calendar = () => {
         EventStart: new Date(startDate).toISOString(),
         EventEnd: new Date(endStr).toISOString(),
         EventParticipants: "AllTeam",
-        EventOrganizer: "Botros",
+        EventOrganizer: "Coach",
         allDay: isAllDay,
       };
   
