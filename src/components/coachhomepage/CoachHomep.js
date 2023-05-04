@@ -45,9 +45,6 @@ const CoachHomep = () => {
           <div className="w-full py-20 border-b-[1px] border-b-black">
             <TeamStats />
           </div>
-          <h1 className="text-6xl font-bold text-white mt-8">
-            <span className="text-designColor capitalize">Tournaments</span>
-          </h1>
 
           <h1 className="text-6xl font-bold text-white mt-20">
             Add Player{" "}
