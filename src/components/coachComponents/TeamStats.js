@@ -25,6 +25,7 @@ const fetchData = async () => {
       return {
         name: member,
         games: memberStats.map((game) => ({
+          game_number: game.game_number,
           points: game.points,
           rebounds: game.rebounds,
           assists: game.assists,
@@ -98,11 +99,12 @@ const PlayerStats = () => {
           { points: 0, rebounds: 0, assists: 0, steals: 0, blocks: 0 }
         );
 
-        const avgStats = Object.keys(sumStats).reduce((acc, stat) => {
-          acc[stat] = parseFloat((sumStats[stat] / data.length).toFixed(2));
-          return acc;
-        }, {});
-
+        const avgStats = Object.keys(sumStats)
+          .filter((stat) => stat !== "game_number")
+          .reduce((acc, stat) => {
+            acc[stat] = parseFloat((sumStats[stat] / data.length).toFixed(2));
+            return acc;
+          }, {});
         return avgStats;
       });
 

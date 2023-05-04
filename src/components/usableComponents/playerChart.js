@@ -35,7 +35,6 @@ const ChartComponent = ({
     labels: games[0].map((_, index) => `Game ${index + 1}`),
     datasets: [
       {
-        // Initial player's dataset (LeBron James)
         data: games[0].map((game) => game[selectedColumn]),
         backgroundColor: "#334155",
         borderColor: "#ff8c00",
@@ -108,12 +107,12 @@ const ChartComponent = ({
           font: {
             size: 20,
           },
-          beginAtZero: true, // Start the axis at zero
+          beginAtZero: true,
         },
         grid: {
-          color: "#5A5A5A", // Set the gridlines color to light grey
+          color: "#5A5A5A",
         },
-        min: 0, // Make the y-axis start from zero
+        min: 0,
       },
     },
     plugins: {
@@ -136,14 +135,14 @@ const ChartComponent = ({
         bodyColor: "#000",
         displayColors: false,
         callbacks: {
-          title: () => {}, // Disable the title
+          title: () => {},
         },
       },
       point: {
         hoverBackgroundColor: "#ff0000",
       },
     },
-    spanGaps: true, // Add this line to enable continuous line chart
+    spanGaps: true,
   };
 
   return (

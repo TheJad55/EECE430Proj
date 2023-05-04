@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ChartComponent from "./playerChart";
 import PlayerTable from "./PlayerTable";
+
 const fetchCurrentUser = async () => {
   try {
     const response = await fetch("http://127.0.0.1:8000/user/me/", {
@@ -43,6 +44,7 @@ const fetchData = async () => {
       return {
         name: member,
         games: memberStats.map((game) => ({
+          game_number: game.game_number,
           points: game.points,
           rebounds: game.rebounds,
           assists: game.assists,
@@ -51,6 +53,7 @@ const fetchData = async () => {
         })),
       };
     });
+
     const teamStats = await Promise.all(teamStatsPromises);
 
     // Move current user to the front of the list
@@ -62,6 +65,7 @@ const fetchData = async () => {
       teamStats.unshift(currentUserStats);
     }
 
+    // Get all unique game_numbers from all players
     const allGameNumbers = new Set(
       teamStats.flatMap((player) =>
         player.games.map((game) => game.game_number)
@@ -91,43 +95,11 @@ const fetchData = async () => {
       player.games.sort((a, b) => a.game_number - b.game_number);
     });
 
-    const totalGames = teamStats.reduce(
-      (acc, player) => Math.max(acc, player.games.length),
-      0
-    );
-
-    const allTeamGames = Array.from({ length: totalGames }, (_, i) => {
-      const sumStats = teamStats.reduce(
-        (acc, player) => {
-          if (player.games[i]) {
-            Object.keys(player.games[i]).forEach((stat) => {
-              acc[stat] += player.games[i][stat];
-            });
-          }
-          return acc;
-        },
-        { points: 0, rebounds: 0, assists: 0, steals: 0, blocks: 0 }
-      );
-
-      const avgStats = Object.keys(sumStats).reduce((acc, stat) => {
-        acc[stat] = parseFloat((sumStats[stat] / teamStats.length).toFixed(2));
-        return acc;
-      }, {});
-
-      return avgStats;
-    });
-
-    teamStats.push({
-      name: "All Team",
-      games: allTeamGames,
-    });
-
     return teamStats;
   } catch (error) {
     console.error("Failed to fetch data:", error);
   }
 };
-
 const PlayerStats = () => {
   const [playerData, setPlayerData] = useState([]);
   const [initialPlayer] = useState(0);
@@ -143,6 +115,33 @@ const PlayerStats = () => {
         (acc, player) => Math.max(acc, player.games.length),
         0
       );
+      const allTeamGames = Array.from({ length: totalGames }, (_, i) => {
+        const sumStats = data.reduce(
+          (acc, player) => {
+            if (player.games[i]) {
+              Object.keys(player.games[i]).forEach((stat) => {
+                acc[stat] += player.games[i][stat];
+              });
+            }
+            return acc;
+          },
+          { points: 0, rebounds: 0, assists: 0, steals: 0, blocks: 0 }
+        );
+
+        const avgStats = Object.keys(sumStats)
+          .filter((stat) => stat !== "game_number")
+          .reduce((acc, stat) => {
+            acc[stat] = parseFloat((sumStats[stat] / data.length).toFixed(2));
+            return acc;
+          }, {});
+
+        return avgStats;
+      });
+
+      data.push({
+        name: "All Team",
+        games: allTeamGames,
+      });
 
       setPlayerData(data);
     });
