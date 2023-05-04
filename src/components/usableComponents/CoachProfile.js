@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import jsImg from "../../assets/images/playerIMG/js.jpg";
-import teamLogo from "../../assets/images/playerIMG/teamLogo.png";
+import profilePhotox from "../../assets/images/playerIMG/profilePhotox.png";
 import bouncepp from "../../assets/images/playerIMG/bouncepp.png";
 
 const CoachProfile = () => {
@@ -45,11 +45,9 @@ const CoachProfile = () => {
       <div className="content-center mx-auto flex justify-center">
         <div className="w-2/3">
           <div className="w-full">
-            <div className="flex flex-col items-center"></div>
+            <div className="flex flex-col items-center bg-grey-700"></div>
             <div
-              className="shadow-shadowOne rounded-lg p-8 shadow-md w-full mx-auto my-10 flex"
-              style={{ backgroundColor: "#2F5233" }} // Replace this with a color fetched from the API if needed
-            >
+              className="shadow-shadowOne rounded-lg p-8 shadow-md w-full mx-auto my-10 flex bg-grey-800"            >
               <div className="w-1/3">
                 <img
                 className="rounded-lg object-cover w-full h-96"
@@ -83,7 +81,7 @@ const CoachProfile = () => {
           </div>
         </div>
         <div className="w-1/3 flex items-end justify-center mb-10">
-          <img className="h-96" src={teamLogo} alt={coach.TeamName} />
+          <img className="h-96" src={profilePhotox} alt={coach.TeamName} />
         </div>
       </div>
     </section>

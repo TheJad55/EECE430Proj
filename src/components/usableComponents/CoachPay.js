@@ -43,7 +43,8 @@ const CoachPay = () => {
             Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
           },
           body: JSON.stringify({
-            PaymentAmount: parseFloat(amount) * -1,
+            username: selectedUsername,
+            PaymentAmount: amount,
           }),
         });
   
