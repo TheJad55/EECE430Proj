@@ -2,6 +2,7 @@ import React from "react";
 import Navbar4 from "../navbar/Navbar4";
 import CoachProfile from "../usableComponents/CoachProfile";
 import TeamStats from "../coachComponents/TeamStats";
+import CoachPay from "../usableComponents/CoachPay";
 import ContactCoach from "../contact/ContactCoach";
 import Calendar from "../calendar/Calendar.jsx";
 import Chat from "../GPT4/GPT4";
@@ -30,6 +31,7 @@ const CoachHomep = () => {
             <span className="text-designColor capitalize">Stats</span>
           </h1>
           <ContactCoach />
+          <CoachPay />
           <Calendar />
           <h1 className="text-6xl font-bold text-white mt-20 mb-20">
             Your{" "}
