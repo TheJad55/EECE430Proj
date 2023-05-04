@@ -90,6 +90,12 @@ const Calendar = () => {
       const startDate = new Date(selected.startStr);
       const endDate = new Date(startDate);
       const isAllDay = selected.allDay;
+      const currentTime = new Date();
+      if (startDate < currentTime) {
+        alert("You cannot register an event before the current time.");
+        return;
+      }
+
   
       if (isAllDay) {
         endDate.setDate(startDate.getDate() + 1);
