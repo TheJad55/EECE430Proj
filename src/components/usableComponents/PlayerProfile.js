@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import bouncepp from "../../assets/images/playerIMG/bouncepp.png";
 
 const PlayerProfile = () => {
   const [player, setPlayer] = useState(null);
@@ -69,7 +70,7 @@ const PlayerProfile = () => {
     >
       <div className="content-center mx-auto">
         <h1 className="text-6xl font-bold text-white text-center mb-5">
-          Welcome to your profile
+          Welcome to Your Profile
         </h1>
         <h2 className="text-6xl font-bold text-designColor capitalize text-center">
           {player.Firstname} {player.Lastname}
@@ -80,7 +81,7 @@ const PlayerProfile = () => {
               {/* You can replace this with an actual image URL from the API if available */}
               <img
                 className="rounded-lg object-cover w-full h-96"
-                src="https://via.placeholder.com/150"
+                src={bouncepp}
                 alt={`${player.Firstname} ${player.Lastname}`}
               />
             </div>

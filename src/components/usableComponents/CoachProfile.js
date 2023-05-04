@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import jsImg from "../../assets/images/playerIMG/js.jpg";
 import teamLogo from "../../assets/images/playerIMG/teamLogo.png";
+import bouncepp from "../../assets/images/playerIMG/bouncepp.png";
 
 const CoachProfile = () => {
   const [coach, setCoach] = useState(null);
@@ -49,10 +50,10 @@ const CoachProfile = () => {
               className="shadow-shadowOne rounded-lg p-8 shadow-md w-full mx-auto my-10 flex"
               style={{ backgroundColor: "#2F5233" }} // Replace this with a color fetched from the API if needed
             >
-              <div className="w-1/2">
+              <div className="w-1/3">
                 <img
-                  className="rounded-lg object-cover w-full h-96"
-                  src={jsImg} // Replace this with a coach image fetched from the API if needed
+                className="rounded-lg object-cover w-full h-96"
+                src={bouncepp} // Replace this with a coach image fetched from the API if needed
                   alt={
                     coach.TeamManagerFirstname + " " + coach.TeamManagerLastname
                   }
@@ -62,19 +63,19 @@ const CoachProfile = () => {
                 <h2 className="text-4xl font-semibold mb-6">
                   {coach.TeamManagerFirstname} {coach.TeamManagerLastname}
                 </h2>
-                <p className="text-xl mb-2">
+                <p className="text-xl mb-5">
                   <strong>Team:</strong> {coach.TeamName}
                 </p>
-                <p className="text-xl mb-2">
+                <p className="text-xl mb-5">
                   <strong>Email:</strong> {coach.TeamManagerEmail}
                 </p>
-                <p className="text-xl mb-2">
+                <p className="text-xl mb-5">
                   <strong>Country:</strong> {coach.Country}
                 </p>
-                <p className="text-xl mb-2">
+                <p className="text-xl mb-5">
                   <strong>Games Won:</strong> {coach.GamesWon}
                 </p>
-                <p className="text-xl mb-2">
+                <p className="text-xl mb-5">
                   <strong>Games Lost:</strong> {coach.GamesLost}
                 </p>
               </div>
