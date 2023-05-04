@@ -4,6 +4,7 @@ import CoachProfile from "../usableComponents/CoachProfile";
 import TeamStats from "../coachComponents/TeamStats";
 import ContactCoach from "../contact/ContactCoach";
 import Calendar from "../calendar/Calendar.jsx";
+import Chat from "../GPT4/GPT4";
 
 const CoachHomep = () => {
   return (
@@ -30,6 +31,11 @@ const CoachHomep = () => {
           </h1>
           <ContactCoach />
           <Calendar />
+          <h1 className="text-6xl font-bold text-white mt-20 mb-20">
+            Your{" "}
+            <span className="text-designColor capitalize">AI Companion</span>
+          </h1>
+          <Chat></Chat>
         </div>
       </div>
     </div>
