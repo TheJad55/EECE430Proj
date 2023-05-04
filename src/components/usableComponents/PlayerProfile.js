@@ -29,7 +29,37 @@ const PlayerProfile = () => {
   }, []);
 
   if (!player) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen space-y-4">
+        <div
+          className="w-3/4 h-6 rounded"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05))",
+            backgroundSize: "200px 100%",
+            animation: "loading 1.2s ease-in-out infinite",
+          }}
+        ></div>
+        <div
+          className="w-2/3 h-6 rounded"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05))",
+            backgroundSize: "200px 100%",
+            animation: "loading 1.2s ease-in-out infinite",
+          }}
+        ></div>
+        <div
+          className="w-1/2 h-6 rounded"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05))",
+            backgroundSize: "200px 100%",
+            animation: "loading 1.2s ease-in-out infinite",
+          }}
+        ></div>
+      </div>
+    );
   }
 
   return (

@@ -91,18 +91,7 @@ const LoginForm = () => {
                   <p className="text-red-500">{errors.username.message}</p>
                 )}
               </div>
-              <div className="mt-5">
-                <label htmlFor="teamManager" className="text-black">
-                  <input
-                    id="teamManager"
-                    type="checkbox"
-                    className="mr-2"
-                    checked={isTeamManager}
-                    onChange={(e) => setIsTeamManager(e.target.checked)}
-                  />
-                  Login as team manager
-                </label>
-              </div>
+
               <div className="mt-5">
                 <input
                   id="password"
@@ -114,6 +103,18 @@ const LoginForm = () => {
                 {errors.password && (
                   <p className="text-red-500">{errors.password.message}</p>
                 )}
+              </div>
+              <div className="mt-5">
+                <label htmlFor="teamManager" className="text-black">
+                  <input
+                    id="teamManager"
+                    type="checkbox"
+                    className="mr-2"
+                    checked={isTeamManager}
+                    onChange={(e) => setIsTeamManager(e.target.checked)}
+                  />
+                  Login as team manager
+                </label>
               </div>
               <div className="mt-5">
                 <button

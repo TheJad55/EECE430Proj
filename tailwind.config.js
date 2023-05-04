@@ -1,5 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+  darkMode: false,
+  theme: {
+    extend: {
+      animation: {
+        loading: "loading 1.2s ease-in-out infinite",
+      },
+      keyframes: {
+        loading: {
+          "0%": { backgroundPosition: "-200px 0" },
+          "100%": { backgroundPosition: "calc(200px + 100%) 0" },
+        },
+      },
+    },
+  },
+  variants: {},
+  plugins: [],
+
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {

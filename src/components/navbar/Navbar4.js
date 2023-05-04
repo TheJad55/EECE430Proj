@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-scroll";
+import { Link, useNavigate } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
 import { FaFacebookF, FaTwitter, FaLinkedinIn } from "react-icons/fa";
@@ -7,6 +7,11 @@ import { logo } from "../../assets/index";
 import { navLinksdata } from "../../constants";
 
 const Navbar4 = () => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    sessionStorage.removeItem("access_token");
+    navigate("/");
+  };
   const [showMenu, setShowMenu] = useState(false);
   return (
     <div className="w-full h-24 sticky top-0 z-50 bg-bodyColor mx-auto flex justify-between items-center font-titleFont border-b-[1px] border-b-gray-600">
@@ -65,6 +70,12 @@ const Navbar4 = () => {
               Calendar
             </Link>
           </li>
+          <button
+            onClick={handleLogout}
+            className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300"
+          >
+            Logout
+          </button>
         </ul>
         <span
           onClick={() => setShowMenu(!showMenu)}
@@ -132,6 +143,12 @@ const Navbar4 = () => {
                     Calendar
                   </Link>
                 </li>
+                <button
+                  onClick={handleLogout}
+                  className="text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300"
+                >
+                  Logout
+                </button>
               </ul>
               <div className="flex flex-col gap-4">
                 <h2 className="text-base uppercase font-titleFont mb-4">

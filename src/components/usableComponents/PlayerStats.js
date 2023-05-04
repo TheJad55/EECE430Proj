@@ -1,95 +1,186 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ChartComponent from "./playerChart";
 import PlayerTable from "./PlayerTable";
-
-const PlayerStats = () => {
-  const playerData = [
-    {
-      name: "LeBron James",
-      games: [
-        { points: 25, rebounds: 5, assists: 8, steals: 1, blocks: 1 },
-        { points: 30, rebounds: 10, assists: 6, steals: 3, blocks: 0 },
-        { points: 20, rebounds: 8, assists: 12, steals: 2, blocks: 2 },
-        { points: 28, rebounds: 7, assists: 5, steals: 1, blocks: 1 },
-        { points: 32, rebounds: 12, assists: 7, steals: 2, blocks: 1 },
-        { points: 25, rebounds: 5, assists: 8, steals: 1, blocks: 1 },
-        { points: 30, rebounds: 10, assists: 6, steals: 3, blocks: 0 },
-      ],
-    },
-    {
-      name: "Kevin Durant",
-      games: [
-        { points: 20, rebounds: 5, assists: 8, steals: 1, blocks: 1 },
-        { points: 25, rebounds: 10, assists: 6, steals: 3, blocks: 0 },
-        { points: 15, rebounds: 8, assists: 12, steals: 2, blocks: 2 },
-        { points: 23, rebounds: 7, assists: 5, steals: 1, blocks: 1 },
-        { points: 27, rebounds: 12, assists: 7, steals: 2, blocks: 1 },
-      ],
-    },
-    {
-      name: "Michael Jordan",
-      games: [
-        { points: 30, rebounds: 5, assists: 5, steals: 2, blocks: 0 },
-        { points: 40, rebounds: 7, assists: 3, steals: 1, blocks: 1 },
-        { points: 35, rebounds: 6, assists: 7, steals: 3, blocks: 0 },
-        { points: 37, rebounds: 8, assists: 5, steals: 2, blocks: 2 },
-        { points: 45, rebounds: 10, assists: 4, steals: 1, blocks: 0 },
-        { points: 32, rebounds: 5, assists: 6, steals: 2, blocks: 1 },
-        { points: 30, rebounds: 7, assists: 4, steals: 1, blocks: 0 },
-        { points: 35, rebounds: 9, assists: 5, steals: 3, blocks: 2 },
-        { points: 32, rebounds: 6, assists: 7, steals: 1, blocks: 0 },
-        { points: 30, rebounds: 8, assists: 4, steals: 2, blocks: 1 },
-      ],
-    },
-    {
-      name: "Kobe Bryant",
-      games: [
-        { points: 25, rebounds: 4, assists: 6, steals: 1, blocks: 0 },
-        { points: 30, rebounds: 7, assists: 4, steals: 2, blocks: 0 },
-        { points: 27, rebounds: 5, assists: 3, steals: 1, blocks: 1 },
-        { points: 35, rebounds: 9, assists: 5, steals: 3, blocks: 2 },
-        { points: 32, rebounds: 6, assists: 7, steals: 1, blocks: 0 },
-      ],
-    },
-  ];
-
-  const totalGames = playerData.reduce(
-    (acc, player) => Math.max(acc, player.games.length),
-    0
-  );
-
-  const allTeamGames = Array.from({ length: totalGames }, (_, i) => {
-    const sumStats = playerData.reduce(
-      (acc, player) => {
-        if (player.games[i]) {
-          Object.keys(player.games[i]).forEach((stat) => {
-            acc[stat] += player.games[i][stat];
-          });
-        }
-        return acc;
+const fetchCurrentUser = async () => {
+  try {
+    const response = await fetch("http://127.0.0.1:8000/user/me/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + sessionStorage.getItem("access_token"),
       },
-      { points: 0, rebounds: 0, assists: 0, steals: 0, blocks: 0 }
+    });
+
+    const userData = await response.json();
+    return userData.username;
+  } catch (error) {
+    console.error("Failed to fetch current user:", error);
+  }
+};
+const fetchData = async () => {
+  try {
+    const currentUser = await fetchCurrentUser();
+    // Fetch team members
+    const teamMembersResponse = await fetch(
+      "http://127.0.0.1:8000/getteamates/user",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("access_token"),
+        },
+      }
+    );
+    const teamMembers = await teamMembersResponse.json();
+
+    const teamStatsPromises = teamMembers.map(async (member) => {
+      console.log("Fetching stats for:", member);
+      const memberStatsResponse = await fetch(
+        `http://127.0.0.1:8000/getstats/${member}`
+      );
+      const memberStats = await memberStatsResponse.json();
+
+      return {
+        name: member,
+        games: memberStats.map((game) => ({
+          game_number: game.game_number,
+          points: game.points,
+          rebounds: game.rebounds,
+          assists: game.assists,
+          steals: game.steals,
+          blocks: game.blocks,
+        })),
+      };
+    });
+    const teamStats = await Promise.all(teamStatsPromises);
+
+    // Move current user to the front of the list
+    const currentUserIndex = teamStats.findIndex(
+      (player) => player.name === currentUser
+    );
+    if (currentUserIndex !== -1) {
+      const currentUserStats = teamStats.splice(currentUserIndex, 1)[0];
+      teamStats.unshift(currentUserStats);
+    }
+
+    // Get all unique game_numbers from all players
+    const allGameNumbers = new Set(
+      teamStats.flatMap((player) =>
+        player.games.map((game) => game.game_number)
+      )
     );
 
-    // Calculate the average for each stat
-    const avgStats = Object.keys(sumStats).reduce((acc, stat) => {
-      acc[stat] = sumStats[stat] / playerData.length;
-      return acc;
-    }, {});
+    // Fill missing games with zeros for each player
+    teamStats.forEach((player) => {
+      const playerGameNumbers = new Set(
+        player.games.map((game) => game.game_number)
+      );
+      const missingGames = [...allGameNumbers].filter(
+        (gameNumber) => !playerGameNumbers.has(gameNumber)
+      );
 
-    return avgStats;
-  });
-  playerData.push({
-    name: "All Team",
-    games: allTeamGames,
-  });
+      missingGames.forEach((gameNumber) => {
+        player.games.push({
+          game_number: gameNumber,
+          points: 0,
+          rebounds: 0,
+          assists: 0,
+          steals: 0,
+          blocks: 0,
+        });
+      });
 
+      // Sort games by game_number
+      player.games.sort((a, b) => a.game_number - b.game_number);
+    });
+
+    return teamStats;
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+  }
+};
+
+const PlayerStats = () => {
+  const [playerData, setPlayerData] = useState([]);
   const [initialPlayer] = useState(0);
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const [selectedGame, setSelectedGame] = useState("all");
   const [selectedColumn, setSelectedColumn] = useState("points");
   const [selectedRow, setSelectedRow] = useState(null);
   const [displayBarChart, setDisplayBarChart] = useState(false);
+
+  useEffect(() => {
+    fetchData().then((data) => {
+      const totalGames = data.reduce(
+        (acc, player) => Math.max(acc, player.games.length),
+        0
+      );
+
+      const allTeamGames = Array.from({ length: totalGames }, (_, i) => {
+        const sumStats = data.reduce(
+          (acc, player) => {
+            if (player.games[i]) {
+              Object.keys(player.games[i]).forEach((stat) => {
+                acc[stat] += player.games[i][stat];
+              });
+            }
+            return acc;
+          },
+          { points: 0, rebounds: 0, assists: 0, steals: 0, blocks: 0 }
+        );
+
+        const avgStats = Object.keys(sumStats).reduce((acc, stat) => {
+          acc[stat] = sumStats[stat] / data.length;
+          return acc;
+        }, {});
+
+        return avgStats;
+      });
+
+      data.push({
+        name: "All Team",
+        games: allTeamGames,
+      });
+
+      setPlayerData(data);
+    });
+  }, []);
+
+  console.log("playerData:", playerData);
+
+  if (!playerData || !playerData.length) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen space-y-4">
+        <div
+          className="w-3/4 h-6 rounded"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05))",
+            backgroundSize: "200px 100%",
+            animation: "loading 1.2s ease-in-out infinite",
+          }}
+        ></div>
+        <div
+          className="w-2/3 h-6 rounded"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05))",
+            backgroundSize: "200px 100%",
+            animation: "loading 1.2s ease-in-out infinite",
+          }}
+        ></div>
+        <div
+          className="w-1/2 h-6 rounded"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05))",
+            backgroundSize: "200px 100%",
+            animation: "loading 1.2s ease-in-out infinite",
+          }}
+        ></div>
+      </div>
+    );
+  }
 
   const handlePlayerSelectChange = (e) => {
     const playerId = parseInt(e.target.value);
@@ -110,48 +201,6 @@ const PlayerStats = () => {
 
   const handleColumnClick = (column) => {
     setSelectedColumn(column);
-  };
-
-  const handleRowClick = (index) => {
-    if (index === "all") {
-      setDisplayBarChart((prevDisplayBarChart) => !prevDisplayBarChart);
-      setSelectedRow((prevSelectedRow) =>
-        prevSelectedRow === "all" ? null : "all"
-      );
-    } else {
-      if (selectedRow === index) {
-        setSelectedRow(null);
-      } else {
-        setSelectedRow(index);
-      }
-    }
-  };
-  const displayData = selectedPlayers
-    .map((playerId) =>
-      selectedGame === "all"
-        ? playerData[playerId].games
-        : [playerData[playerId].games[selectedGame]]
-    )
-    .flat();
-
-  const renderStatsRow = (gameData, index) => {
-    const gameNumber =
-      selectedGame === "all" ? index + 1 : parseInt(selectedGame) + 1;
-    return (
-      <tr key={index}>
-        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-300">
-          Game {gameNumber}
-        </td>
-        {Object.values(gameData).map((value, index) => (
-          <td
-            key={index}
-            className="px-6 py-4 whitespace-nowrap text-sm text-white"
-          >
-            {value}
-          </td>
-        ))}
-      </tr>
-    );
   };
 
   return (
