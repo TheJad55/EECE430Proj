@@ -43,7 +43,6 @@ const fetchData = async () => {
       return {
         name: member,
         games: memberStats.map((game) => ({
-          game_number: game.game_number,
           points: game.points,
           rebounds: game.rebounds,
           assists: game.assists,
@@ -63,7 +62,6 @@ const fetchData = async () => {
       teamStats.unshift(currentUserStats);
     }
 
-    // Get all unique game_numbers from all players
     const allGameNumbers = new Set(
       teamStats.flatMap((player) =>
         player.games.map((game) => game.game_number)
@@ -81,7 +79,6 @@ const fetchData = async () => {
 
       missingGames.forEach((gameNumber) => {
         player.games.push({
-          game_number: gameNumber,
           points: 0,
           rebounds: 0,
           assists: 0,
@@ -92,6 +89,37 @@ const fetchData = async () => {
 
       // Sort games by game_number
       player.games.sort((a, b) => a.game_number - b.game_number);
+    });
+
+    const totalGames = teamStats.reduce(
+      (acc, player) => Math.max(acc, player.games.length),
+      0
+    );
+
+    const allTeamGames = Array.from({ length: totalGames }, (_, i) => {
+      const sumStats = teamStats.reduce(
+        (acc, player) => {
+          if (player.games[i]) {
+            Object.keys(player.games[i]).forEach((stat) => {
+              acc[stat] += player.games[i][stat];
+            });
+          }
+          return acc;
+        },
+        { points: 0, rebounds: 0, assists: 0, steals: 0, blocks: 0 }
+      );
+
+      const avgStats = Object.keys(sumStats).reduce((acc, stat) => {
+        acc[stat] = parseFloat((sumStats[stat] / teamStats.length).toFixed(2));
+        return acc;
+      }, {});
+
+      return avgStats;
+    });
+
+    teamStats.push({
+      name: "All Team",
+      games: allTeamGames,
     });
 
     return teamStats;
@@ -115,32 +143,6 @@ const PlayerStats = () => {
         (acc, player) => Math.max(acc, player.games.length),
         0
       );
-
-      const allTeamGames = Array.from({ length: totalGames }, (_, i) => {
-        const sumStats = data.reduce(
-          (acc, player) => {
-            if (player.games[i]) {
-              Object.keys(player.games[i]).forEach((stat) => {
-                acc[stat] += player.games[i][stat];
-              });
-            }
-            return acc;
-          },
-          { points: 0, rebounds: 0, assists: 0, steals: 0, blocks: 0 }
-        );
-
-        const avgStats = Object.keys(sumStats).reduce((acc, stat) => {
-          acc[stat] = sumStats[stat] / data.length;
-          return acc;
-        }, {});
-
-        return avgStats;
-      });
-
-      data.push({
-        name: "All Team",
-        games: allTeamGames,
-      });
 
       setPlayerData(data);
     });
