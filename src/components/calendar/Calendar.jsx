@@ -21,11 +21,12 @@ const Calendar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [currentEvents, setCurrentEvents] = useState([]);
+  const [teamName, setTeamName] = useState("");
 
   // Fetch events from the backend
   const fetchEvents = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/event", {
+      const response = await fetch("http://127.0.0.1:8000/teamevents", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -48,13 +49,31 @@ const Calendar = () => {
         });
   
         setCurrentEvents(updatedData);
+  
+        // Set the team name
       } else {
         console.error("Failed to fetch events");
       }
-    } catch (error) {
-      console.error("Error fetching events:", error);
+    // Fetch team name
+    const teamResponse = await fetch("http://127.0.0.1:8000/teams/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + sessionStorage.getItem("access_token"),
+      },
+    });
+
+    if (teamResponse.ok) {
+      const teamData = await teamResponse.json();
+      setTeamName(teamData.TeamName);
+    } else {
+      console.error("Failed to fetch team info");
     }
-  };
+  } catch (error) {
+    console.error("Error fetching events or team info:", error);
+  }
+};
+  
   
   
 
@@ -85,7 +104,7 @@ const Calendar = () => {
       const newEvent = {
         EventName: title,
         EventType: "Custom",
-        Team: "Lebron",
+        Team: teamName,
         EventStart: new Date(startDate).toISOString(),
         EventEnd: new Date(endStr).toISOString(),
         EventParticipants: "AllTeam",
