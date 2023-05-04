@@ -45,9 +45,9 @@ const CoachProfile = () => {
       <div className="content-center mx-auto flex justify-center">
         <div className="w-2/3">
           <div className="w-full">
-            <div className="flex flex-col items-center bg-grey-700"></div>
+            <div className="flex flex-col items-center"></div>
             <div
-              className="shadow-shadowOne rounded-lg p-8 shadow-md w-full mx-auto my-10 flex bg-grey-800"            >
+              className="bg-gray-800 shadow-shadowOne rounded-lg p-8 shadow-md w-full mx-auto my-10 flex bg-grey-800"            >
               <div className="w-1/3">
                 <img
                 className="rounded-lg object-cover w-full h-96"

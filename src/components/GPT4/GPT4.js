@@ -54,6 +54,7 @@ const Chat = () => {
   }, []);
 
   return (
+    <section id="gpt" className="w-full py-20 border-b-[1px] border-b-black">
     <div className="flex flex-col h-screen rounded-md bg-gray-700">
       <div className="flex-1 overflow-y-auto p-6">
         <ul className="list-none">
@@ -96,6 +97,7 @@ const Chat = () => {
         </form>
       </div>
     </div>
+    </section>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import teamLogo from "../../assets/images/playerIMG/teamLogo.png";
+import profilePhotox from "../../assets/images/playerIMG/profilePhotox.png";
 
 const PlayerTeam = () => {
   const [teamData, setTeamData] = useState(null);
@@ -68,7 +68,7 @@ const PlayerTeam = () => {
             <div className="w-1/2">
               <img
                 className="rounded-lg object-contain w-full h-96"
-                src={teamLogo}
+                src={profilePhotox}
                 alt={teamData.TeamName}
                 style={{
                   maxWidth: "100%",
