@@ -10,7 +10,7 @@ const ContactLeft = () => {
         alt="contactImg"
       />
       <div className="flex flex-col gap-4">
-        <h3 className="text-3xl font-bold text-white">Pick Desired Player</h3>
+        <h3 className="text-3xl font-bold text-white">Inquire Us</h3>
         <p className="text-lg font-normal text-gray-400">
           Ask us Your Questions!
         </p>
