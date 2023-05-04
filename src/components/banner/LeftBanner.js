@@ -1,7 +1,6 @@
 import React from "react";
 import { useTypewriter, Cursor } from "react-simple-typewriter";
-import { FaFacebookF, FaTwitter, FaLinkedinIn, FaReact } from "react-icons/fa";
-import { SiTailwindcss, SiFigma, SiNextdotjs } from "react-icons/si";
+import { FaFacebookF, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 
 const LeftBanner = () => {
   const [text] = useTypewriter({
@@ -38,15 +37,30 @@ const LeftBanner = () => {
             Find us in
           </h2>
           <div className="flex gap-4">
-          <a href="https://www.facebook.com" target="_blank" rel="noreferrer" className="bannerIcon">
-            <FaFacebookF />
-          </a>
-          <a href="https://www.twitter.com" target="_blank" rel="noreferrer" className="bannerIcon">
-            <FaTwitter />
-          </a>
-          <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" className="bannerIcon">
-            <FaLinkedinIn />
-          </a>
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noreferrer"
+              className="bannerIcon"
+            >
+              <FaFacebookF />
+            </a>
+            <a
+              href="https://www.twitter.com"
+              target="_blank"
+              rel="noreferrer"
+              className="bannerIcon"
+            >
+              <FaTwitter />
+            </a>
+            <a
+              href="https://www.linkedin.com"
+              target="_blank"
+              rel="noreferrer"
+              className="bannerIcon"
+            >
+              <FaLinkedinIn />
+            </a>
           </div>
         </div>
       </div>

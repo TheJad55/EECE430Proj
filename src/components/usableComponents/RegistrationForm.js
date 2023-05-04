@@ -4,8 +4,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import socialImage from "../../assets/images/LoginReg/social.jpg";
 
-const genderOptions = ["Male", "Female", "Other"];
-
 const schema = z.object({
   username: z
     .string()
@@ -51,7 +49,7 @@ const RegistrationForm = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
   });
@@ -96,10 +94,6 @@ const RegistrationForm = () => {
     } catch (error) {
       console.error("Error submitting form:", error);
     }
-  };
-
-  const handleAlertDismiss = () => {
-    setShowSuccessAlert(false);
   };
 
   return (

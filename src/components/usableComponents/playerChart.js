@@ -87,10 +87,6 @@ const ChartComponent = ({
     ],
   };
 
-  const highestValue = Math.max(
-    ...lineChartData.datasets.flatMap((dataset) => Math.max(...dataset.data))
-  );
-
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -141,10 +137,6 @@ const ChartComponent = ({
         displayColors: false,
         callbacks: {
           title: () => {}, // Disable the title
-          label: (context) => {
-            const yValue = context.parsed.y;
-            return "y: ${yValue}";
-          },
         },
       },
       point: {
@@ -153,8 +145,6 @@ const ChartComponent = ({
     },
     spanGaps: true, // Add this line to enable continuous line chart
   };
-
-  const ChartToRender = allSeasonSelected ? Bar : Line;
 
   return (
     <div

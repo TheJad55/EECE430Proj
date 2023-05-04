@@ -1,31 +1,9 @@
 import React from "react";
-import BasketballTeamTable from "../usableComponents/TeamTable";
 import Navbar4 from "../navbar/Navbar4";
 import CoachProfile from "../usableComponents/CoachProfile";
 import TeamStats from "../coachComponents/TeamStats";
-import TournamentTable from "../usableComponents/TournamentTable";
-import TournamentOptions from "../usableComponents/TournamentOptions";
 import ContactCoach from "../contact/ContactCoach";
 import Calendar from "../calendar/Calendar.jsx";
-const coach = {
-  imageUrl: "path/to/js.jpg",
-  name: "John Smith",
-  age: 45,
-  team: "Boston Celtics",
-  position: "Head Coach",
-  yearsOfExperience: 20,
-  education: "Bachelor's degree in Sports Management",
-  championships: 2,
-  teamColor: "#2F5233",
-};
-const styles = {
-  container: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "flex-start",
-    marginTop: "5%",
-  },
-};
 
 const CoachHomep = () => {
   return (

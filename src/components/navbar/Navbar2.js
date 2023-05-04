@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-scroll";
 import { FiMenu } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
 import { FaFacebookF, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 import { logo } from "../../assets/index";
-import { navLinksdata } from "../../constants";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -45,15 +43,15 @@ const Navbar = () => {
                 </p>
               </div>
               <ul className="flex flex-col gap-4">
-              <li className="mr-[40px] text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
-            <a href="/login">Login</a>
-          </li>
-          <li className="mr-[40px] text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
-            <a href="/register">Register</a>
-          </li>
-          <li className="mr-[40px] text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
-            <a href="/teamregister">Team Register</a>
-          </li>
+                <li className="mr-[40px] text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+                  <a href="/login">Login</a>
+                </li>
+                <li className="mr-[40px] text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+                  <a href="/register">Register</a>
+                </li>
+                <li className="mr-[40px] text-base font-normal text-gray-400 tracking-wide cursor-pointer hover:text-designColor duration-300">
+                  <a href="/teamregister">Team Register</a>
+                </li>
               </ul>
               <div className="flex flex-col gap-4">
                 <h2 className="text-base uppercase font-titleFont mb-4">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Title from "../layouts/Title";
+
 import ContactCoachLeft from "./ContactCoachLeft";
 
 const ContactCoach = () => {
@@ -14,7 +14,7 @@ const ContactCoach = () => {
   const [blocks, setBlocks] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-  const [token, setToken] = useState("your_token_here");
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     async function fetchUsernames() {

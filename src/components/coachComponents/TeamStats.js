@@ -1,95 +1,153 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ChartComponent1 from "./TeamChart";
 import PlayerTable from "../usableComponents/PlayerTable";
+const fetchData = async () => {
+  try {
+    const teamMembersResponse = await fetch(
+      "http://127.0.0.1:8000/getteamates/team",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("access_token"),
+        },
+      }
+    );
+    const teamMembers = await teamMembersResponse.json();
 
-const PlayerStats = () => {
-  const playerData = [
-    {
-      name: "LeBron James",
-      games: [
-        { points: 25, rebounds: 5, assists: 8, steals: 1, blocks: 1 },
-        { points: 30, rebounds: 10, assists: 6, steals: 3, blocks: 0 },
-        { points: 20, rebounds: 8, assists: 12, steals: 2, blocks: 2 },
-        { points: 28, rebounds: 7, assists: 5, steals: 1, blocks: 1 },
-        { points: 32, rebounds: 12, assists: 7, steals: 2, blocks: 1 },
-        { points: 25, rebounds: 5, assists: 8, steals: 1, blocks: 1 },
-        { points: 30, rebounds: 10, assists: 6, steals: 3, blocks: 0 },
-      ],
-    },
-    {
-      name: "Kevin Durant",
-      games: [
-        { points: 20, rebounds: 5, assists: 8, steals: 1, blocks: 1 },
-        { points: 25, rebounds: 10, assists: 6, steals: 3, blocks: 0 },
-        { points: 15, rebounds: 8, assists: 12, steals: 2, blocks: 2 },
-        { points: 23, rebounds: 7, assists: 5, steals: 1, blocks: 1 },
-        { points: 27, rebounds: 12, assists: 7, steals: 2, blocks: 1 },
-      ],
-    },
-    {
-      name: "Michael Jordan",
-      games: [
-        { points: 30, rebounds: 5, assists: 5, steals: 2, blocks: 0 },
-        { points: 40, rebounds: 7, assists: 3, steals: 1, blocks: 1 },
-        { points: 35, rebounds: 6, assists: 7, steals: 3, blocks: 0 },
-        { points: 37, rebounds: 8, assists: 5, steals: 2, blocks: 2 },
-        { points: 45, rebounds: 10, assists: 4, steals: 1, blocks: 0 },
-        { points: 32, rebounds: 5, assists: 6, steals: 2, blocks: 1 },
-        { points: 30, rebounds: 7, assists: 4, steals: 1, blocks: 0 },
-        { points: 35, rebounds: 9, assists: 5, steals: 3, blocks: 2 },
-        { points: 32, rebounds: 6, assists: 7, steals: 1, blocks: 0 },
-        { points: 30, rebounds: 8, assists: 4, steals: 2, blocks: 1 },
-      ],
-    },
-    {
-      name: "Kobe Bryant",
-      games: [
-        { points: 25, rebounds: 4, assists: 6, steals: 1, blockds: 0 },
-        { points: 30, rebounds: 7, assists: 4, steals: 2, blocks: 0 },
-        { points: 27, rebounds: 5, assists: 3, steals: 1, blocks: 1 },
-        { points: 35, rebounds: 9, assists: 5, steals: 3, blocks: 2 },
-        { points: 32, rebounds: 6, assists: 7, steals: 1, blocks: 0 },
-      ],
-    },
-  ];
+    const teamStatsPromises = teamMembers.map(async (member) => {
+      console.log("Fetching stats for:", member);
+      const memberStatsResponse = await fetch(
+        `http://127.0.0.1:8000/getstats/${member}`
+      );
+      const memberStats = await memberStatsResponse.json();
 
-  const totalGames = playerData.reduce(
-    (acc, player) => Math.max(acc, player.games.length),
-    0
-  );
+      return {
+        name: member,
+        games: memberStats.map((game) => ({
+          points: game.points,
+          rebounds: game.rebounds,
+          assists: game.assists,
+          steals: game.steals,
+          blocks: game.blocks,
+        })),
+      };
+    });
+    const teamStats = await Promise.all(teamStatsPromises);
 
-  const allTeamGames = Array.from({ length: totalGames }, (_, i) => {
-    const sumStats = playerData.reduce(
-      (acc, player) => {
-        if (player.games[i]) {
-          Object.keys(player.games[i]).forEach((stat) => {
-            acc[stat] += player.games[i][stat];
-          });
-        }
-        return acc;
-      },
-      { points: 0, rebounds: 0, assists: 0, steals: 0, blocks: 0 }
+    // Get all unique game_numbers from all players
+    const allGameNumbers = new Set(
+      teamStats.flatMap((player) =>
+        player.games.map((game) => game.game_number)
+      )
     );
 
-    // Calculate the average for each stat
-    const avgStats = Object.keys(sumStats).reduce((acc, stat) => {
-      acc[stat] = sumStats[stat] / playerData.length;
-      return acc;
-    }, {});
+    // Fill missing games with zeros for each player
+    teamStats.forEach((player) => {
+      const playerGameNumbers = new Set(
+        player.games.map((game) => game.game_number)
+      );
+      const missingGames = [...allGameNumbers].filter(
+        (gameNumber) => !playerGameNumbers.has(gameNumber)
+      );
 
-    return avgStats;
-  });
-  playerData.push({
-    name: "All Team",
-    games: allTeamGames,
-  });
+      missingGames.forEach(() => {
+        player.games.push({
+          points: 0,
+          rebounds: 0,
+          assists: 0,
+          steals: 0,
+          blocks: 0,
+        });
+      });
 
+      // Sort games by game_number
+      player.games.sort((a, b) => a.game_number - b.game_number);
+    });
+
+    return teamStats;
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+  }
+};
+const PlayerStats = () => {
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const [selectedPlayers2, setSelectedPlayers2] = useState([]);
+  const [playerData, setPlayerData] = useState([]);
   const [selectedGame, setSelectedGame] = useState("all");
   const [selectedColumn, setSelectedColumn] = useState("points");
   const [selectedRow, setSelectedRow] = useState(null);
   const [displayBarChart, setDisplayBarChart] = useState(false);
+  useEffect(() => {
+    fetchData().then((data) => {
+      const totalGames = data.reduce(
+        (acc, player) => Math.max(acc, player.games.length),
+        0
+      );
+
+      const allTeamGames = Array.from({ length: totalGames }, (_, i) => {
+        const sumStats = data.reduce(
+          (acc, player) => {
+            if (player.games[i]) {
+              Object.keys(player.games[i]).forEach((stat) => {
+                acc[stat] += player.games[i][stat];
+              });
+            }
+            return acc;
+          },
+          { points: 0, rebounds: 0, assists: 0, steals: 0, blocks: 0 }
+        );
+
+        const avgStats = Object.keys(sumStats).reduce((acc, stat) => {
+          acc[stat] = parseFloat((sumStats[stat] / data.length).toFixed(2));
+          return acc;
+        }, {});
+
+        return avgStats;
+      });
+
+      data.push({
+        name: "All Team",
+        games: allTeamGames,
+      });
+
+      setPlayerData(data);
+    });
+  }, []);
+
+  if (!playerData || !playerData.length) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen space-y-4">
+        <div
+          className="w-3/4 h-6 rounded"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05))",
+            backgroundSize: "200px 100%",
+            animation: "loading 1.2s ease-in-out infinite",
+          }}
+        ></div>
+        <div
+          className="w-2/3 h-6 rounded"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05))",
+            backgroundSize: "200px 100%",
+            animation: "loading 1.2s ease-in-out infinite",
+          }}
+        ></div>
+        <div
+          className="w-1/2 h-6 rounded"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05))",
+            backgroundSize: "200px 100%",
+            animation: "loading 1.2s ease-in-out infinite",
+          }}
+        ></div>
+      </div>
+    );
+  }
 
   const handlePlayerSelectChange = (e) => {
     const playerId = parseInt(e.target.value);

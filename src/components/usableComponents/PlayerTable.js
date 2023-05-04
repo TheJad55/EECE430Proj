@@ -1,7 +1,6 @@
 const PlayerTable = ({
   players,
   selectedColumn,
-  setSelectedPlayers,
   initialPlayer,
   selectedPlayers,
   handleColumnClick,

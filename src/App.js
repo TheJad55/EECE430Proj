@@ -6,7 +6,6 @@ import Login from "./components/login/Login";
 import Register from "./components/register/Registration";
 import Homesignedin from "./components/homesignedin/homesignedin";
 import { Routes, Route } from "react-router-dom";
-import Tournaments from "./components/tournaments/Tournaments";
 import CoachHomep from "./components/coachhomepage/CoachHomep";
 import TeamRegister from "./components/teamRegister/TeamRegister";
 
