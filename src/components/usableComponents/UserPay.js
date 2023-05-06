@@ -39,7 +39,7 @@ const UserPay = ({ username }) => {
             Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
           },
           body: JSON.stringify({
-            AddFunds: parseFloat(-amount),
+            AddFunds: parseFloat(amount),
           }),
         });
   
@@ -59,7 +59,7 @@ const UserPay = ({ username }) => {
     <div className="user-pay-container w-full py-20 border-b-[1px] border-b-black">
       <h2 className="text-lg font-semibold text-center">User Payment</h2>
       <p className="text-2xl text-gray-400 uppercase tracking-wide text-center mb-4">
-        Amount to pay: ${accountBalance}
+        Amount to pay: ${- accountBalance}
       </p>
       {paymentStatus && (
         <p className="py-1 bg-gradient-to-r from-[#1e2024] to-[#23272b] shadow-shadowOne text-center text-green-500 text-base tracking-wide animate-bounce w-1/2 mx-auto mb-4">
@@ -69,14 +69,14 @@ const UserPay = ({ username }) => {
         <button
         onClick={() => handlePayment(20)}
         className="w-1/2 bg-gradient-to-r from-red-500 to-yellow-500 text-white text-base py-1 px-2 lgl:px-4 rounded-lg shadow-shadowOne hover:shadow-shadowTwo transition duration-300 ease-in-out focus:outline-none mx-auto block mb-4"
-        disabled={accountBalance <= 0}
+        disabled={accountBalance === 0}
         >
         Pay 20 dollars
         </button>
         <button
-        onClick={() => handlePayment(accountBalance * 1)}
+        onClick={() => handlePayment(accountBalance * -1)}
         className="w-1/2 bg-gradient-to-r from-red-500 to-yellow-500 text-white text-base py-1 px-2 lgl:px-4 rounded-lg shadow-shadowOne hover:shadow-shadowTwo transition duration-300 ease-in-out focus:outline-none mx-auto block"
-        disabled={accountBalance <= 0}
+        disabled={accountBalance === 0}  
         >
         Pay Full Amount
         </button>

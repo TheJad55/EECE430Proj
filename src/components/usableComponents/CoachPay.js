@@ -47,7 +47,7 @@ const CoachPay = () => {
           },
           body: JSON.stringify({
             username: selectedUsername,
-            PaymentAmount: parseFloat(amount) * -1,
+            PaymentAmount: parseFloat(amount),
           }),
         });
   
