@@ -1,6 +1,9 @@
 import React,{useState} from 'react'
 import Title from '../layouts/Title';
 import ContactLeft from './ContactLeft';
+import emailjs from "emailjs-com";
+const EMAILJS_USER_ID = "lnW1DBMlLqJ1eLHtr";
+
 
 const Contact = () => {
   const [username, setUsername] = useState("");
@@ -14,9 +17,10 @@ const Contact = () => {
   // ========== Email Validation start here ==============
   const emailValidation = () => {
     return String(email)
-      .toLocaleLowerCase()
-      .match(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/);
+      .toLowerCase()
+      .match(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)*(\.[a-zA-Z]{2,})$/);
   };
+  
   // ========== Email Validation end here ================
 
   const handleSend = (e) => {
@@ -43,8 +47,37 @@ const Contact = () => {
       setEmail("");
       setSubject("");
       setMessage("");
+      const templateParams = {
+        email: email,
+        subject: subject,
+        message: message,
+      };
+  
+      emailjs
+        .send("service_123456", "template_16faazs", templateParams, EMAILJS_USER_ID)
+        .then(
+          (response) => {
+            console.log("SUCCESS!", response.status, response.text);
+            // Show success message
+            setSuccessMsg(
+              `Thank you dear ${username}, Your Messages has been sent Successfully!`
+            );
+            setErrMsg("");
+            setUsername("");
+            setPhoneNumber("");
+            setEmail("");
+            setSubject("");
+            setMessage("");
+          },
+          (error) => {
+            console.log("FAILED...", error);
+            setErrMsg("Failed to send the email. Please try again.");
+          }
+        );
     }
   };
+  
+  
   return (
     <section
       id="contact"

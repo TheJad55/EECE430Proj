@@ -18,7 +18,7 @@ const fetchCurrentUser = async () => {
     console.error("Failed to fetch current user:", error);
   }
 };
-const fetchData = async () => {
+const fetchData = async (handleError) => {
   try {
     const currentUser = await fetchCurrentUser();
     // Fetch team members
@@ -34,12 +34,25 @@ const fetchData = async () => {
     );
     const teamMembers = await teamMembersResponse.json();
 
+    if (teamMembers.length === 0) {
+      throw new Error("No team members found.");
+    }
+
     const teamStatsPromises = teamMembers.map(async (member) => {
       console.log("Fetching stats for:", member);
       const memberStatsResponse = await fetch(
         `http://127.0.0.1:8000/getstats/${member}`
       );
+      if (!memberStatsResponse.ok) {
+        throw new Error(
+          `Error retrieving stats for member ${member}: ${memberStatsResponse.statusText}`
+        );
+      }
+
       const memberStats = await memberStatsResponse.json();
+      if (memberStats.length === 0 && teamMembers.length === 1) {
+        throw new Error(`No stats found for member ${member}`);
+      }
 
       return {
         name: member,
@@ -98,6 +111,7 @@ const fetchData = async () => {
     return teamStats;
   } catch (error) {
     console.error("Failed to fetch data:", error);
+    handleError(error.message);
   }
 };
 const PlayerStats = () => {
@@ -108,43 +122,48 @@ const PlayerStats = () => {
   const [selectedColumn, setSelectedColumn] = useState("points");
   const [selectedRow, setSelectedRow] = useState(null);
   const [displayBarChart, setDisplayBarChart] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchData().then((data) => {
-      const totalGames = data.reduce(
-        (acc, player) => Math.max(acc, player.games.length),
-        0
-      );
-      const allTeamGames = Array.from({ length: totalGames }, (_, i) => {
-        const sumStats = data.reduce(
-          (acc, player) => {
-            if (player.games[i]) {
-              Object.keys(player.games[i]).forEach((stat) => {
-                acc[stat] += player.games[i][stat];
-              });
-            }
-            return acc;
-          },
-          { points: 0, rebounds: 0, assists: 0, steals: 0, blocks: 0 }
+    fetchData(setError)
+      .then((data) => {
+        const totalGames = data.reduce(
+          (acc, player) => Math.max(acc, player.games.length),
+          0
         );
+        const allTeamGames = Array.from({ length: totalGames }, (_, i) => {
+          const sumStats = data.reduce(
+            (acc, player) => {
+              if (player.games[i]) {
+                Object.keys(player.games[i]).forEach((stat) => {
+                  acc[stat] += player.games[i][stat];
+                });
+              }
+              return acc;
+            },
+            { points: 0, rebounds: 0, assists: 0, steals: 0, blocks: 0 }
+          );
 
-        const avgStats = Object.keys(sumStats)
-          .filter((stat) => stat !== "game_number")
-          .reduce((acc, stat) => {
-            acc[stat] = parseFloat((sumStats[stat] / data.length).toFixed(2));
-            return acc;
-          }, {});
+          const avgStats = Object.keys(sumStats)
+            .filter((stat) => stat !== "game_number")
+            .reduce((acc, stat) => {
+              acc[stat] = parseFloat((sumStats[stat] / data.length).toFixed(2));
+              return acc;
+            }, {});
 
-        return avgStats;
+          return avgStats;
+        });
+
+        data.push({
+          name: "All Team",
+          games: allTeamGames,
+        });
+
+        setPlayerData(data);
+      })
+      .catch((error) => {
+        setError(error.message);
       });
-
-      data.push({
-        name: "All Team",
-        games: allTeamGames,
-      });
-
-      setPlayerData(data);
-    });
   }, []);
 
   console.log("playerData:", playerData);
@@ -203,7 +222,13 @@ const PlayerStats = () => {
   const handleColumnClick = (column) => {
     setSelectedColumn(column);
   };
-
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen space-y-4">
+        <div className="text-2xl text-red-500">{error}</div>
+      </div>
+    );
+  }
   return (
     <section id="stats" className="w-full py-20 border-b-[1px] border-b-black">
       <div>

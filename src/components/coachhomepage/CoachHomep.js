@@ -33,7 +33,7 @@ const CoachHomep = () => {
           <ContactCoach />
           <h1 className="text-6xl font-bold text-white mt-20">
             Player{" "}
-            <span className="text-designColor capitalize">Payment</span>
+            <span className="text-designColor capitalize">Management</span>
           </h1>
           <CoachPay />
           <Calendar />

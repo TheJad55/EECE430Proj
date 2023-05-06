@@ -20,7 +20,7 @@ const Homesignedin = () => {
         </h1>
         <UserPay />
         <h1 className="text-6xl font-bold text-white mt-8 text-center">
-          Your <span classNam e="text-designColor capitalize">Stats</span>
+          Your <span className="text-designColor capitalize">Stats</span>
         </h1>{" "}
         <div className="m-8">
           <PlayerStats />

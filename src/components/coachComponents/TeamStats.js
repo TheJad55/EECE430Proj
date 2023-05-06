@@ -15,12 +15,20 @@ const fetchData = async () => {
     );
     const teamMembers = await teamMembersResponse.json();
 
+    if (!teamMembers || !teamMembers.length) {
+      throw new Error("Failed to fetch team members");
+    }
+
     const teamStatsPromises = teamMembers.map(async (member) => {
       console.log("Fetching stats for:", member);
       const memberStatsResponse = await fetch(
         `http://127.0.0.1:8000/getstats/${member}`
       );
       const memberStats = await memberStatsResponse.json();
+
+      if (memberStats.length === 0 && teamMembers.length === 1) {
+        throw new Error(`No stats found for member ${member}`);
+      }
 
       return {
         name: member,
@@ -68,9 +76,10 @@ const fetchData = async () => {
 
     return teamStats;
   } catch (error) {
-    console.error("Failed to fetch data:", error);
+    throw new Error("Failed to fetch data: " + error.message);
   }
 };
+
 const PlayerStats = () => {
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const [selectedPlayers2, setSelectedPlayers2] = useState([]);

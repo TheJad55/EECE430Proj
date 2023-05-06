@@ -21,6 +21,7 @@
     "chat.js": "^1.0.2",
     "date-fns": "^2.30.0",
     "dotenv": "^16.0.3",
+    "emailjs-com": "^3.2.0",
     "framer-motion": "^10.11.2",
     "js-cookie": "^3.0.5",
     "openai": "^3.2.1",

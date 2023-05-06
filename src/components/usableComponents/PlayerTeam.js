@@ -3,6 +3,7 @@ import profilePhotox from "../../assets/images/playerIMG/profilePhotox.png";
 
 const PlayerTeam = () => {
   const [teamData, setTeamData] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchTeamData = async () => {
@@ -13,15 +14,28 @@ const PlayerTeam = () => {
           },
         });
 
+        if (!response.ok) {
+          throw new Error("Error loading team");
+        }
+
         const data = await response.json();
         setTeamData(data);
       } catch (error) {
         console.error("Error fetching team data:", error);
+        setError(error.message);
       }
     };
 
     fetchTeamData();
   }, []);
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <h2 className="text-2xl text-red-500">{error}</h2>
+      </div>
+    );
+  }
 
   if (!teamData) {
     return (
