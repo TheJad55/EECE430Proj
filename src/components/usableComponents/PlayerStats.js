@@ -68,47 +68,68 @@ const fetchData = async (handleError) => {
     });
 
     const teamStats = await Promise.all(teamStatsPromises);
-
-    // Move current user to the front of the list
-    const currentUserIndex = teamStats.findIndex(
-      (player) => player.name === currentUser
-    );
-    if (currentUserIndex !== -1) {
-      const currentUserStats = teamStats.splice(currentUserIndex, 1)[0];
-      teamStats.unshift(currentUserStats);
-    }
-
-    // Get all unique game_numbers from all players
-    const allGameNumbers = new Set(
-      teamStats.flatMap((player) =>
-        player.games.map((game) => game.game_number)
+    const allStatsAreZero = teamStats.every((player) =>
+      player.games.every((game) =>
+        Object.values(game).every((stat) => stat === 0)
       )
     );
 
-    // Fill missing games with zeros for each player
-    teamStats.forEach((player) => {
-      const playerGameNumbers = new Set(
-        player.games.map((game) => game.game_number)
+    if (allStatsAreZero) {
+      // Add a single game with all stats as zero for each member
+      teamStats.forEach((player) => {
+        player.games = [
+          {
+            game_number: 1,
+            points: 0,
+            rebounds: 0,
+            assists: 0,
+            steals: 0,
+            blocks: 0,
+          },
+        ];
+      });
+    } else {
+      // Move current user to the front of the list
+      const currentUserIndex = teamStats.findIndex(
+        (player) => player.name === currentUser
       );
-      const missingGames = [...allGameNumbers].filter(
-        (gameNumber) => !playerGameNumbers.has(gameNumber)
+      if (currentUserIndex !== -1) {
+        const currentUserStats = teamStats.splice(currentUserIndex, 1)[0];
+        teamStats.unshift(currentUserStats);
+      }
+
+      // Get all unique game_numbers from all players
+      const allGameNumbers = new Set(
+        teamStats.flatMap((player) =>
+          player.games.map((game) => game.game_number)
+        )
       );
 
-      missingGames.forEach((gameNumber) => {
-        player.games.push({
-          points: 0,
-          rebounds: 0,
-          assists: 0,
-          steals: 0,
-          blocks: 0,
+      // Fill missing games with zeros for each player
+      teamStats.forEach((player) => {
+        const playerGameNumbers = new Set(
+          player.games.map((game) => game.game_number)
+        );
+        const missingGames = [...allGameNumbers].filter(
+          (gameNumber) => !playerGameNumbers.has(gameNumber)
+        );
+
+        missingGames.forEach((gameNumber) => {
+          player.games.push({
+            points: 0,
+            rebounds: 0,
+            assists: 0,
+            steals: 0,
+            blocks: 0,
+          });
         });
+
+        // Sort games by game_number
+        player.games.sort((a, b) => a.game_number - b.game_number);
       });
 
-      // Sort games by game_number
-      player.games.sort((a, b) => a.game_number - b.game_number);
-    });
-
-    return teamStats;
+      return teamStats;
+    }
   } catch (error) {
     console.error("Failed to fetch data:", error);
     handleError(error.message);
